@@ -2,11 +2,11 @@ package com.bina.az.binaazdata.Jsoup;
 
 
 import com.bina.az.binaazdata.dto.PurchaseDto;
+import lombok.Builder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,12 +36,23 @@ public class JsoupPurchase {
             for (Element element1 : div) {
 
                 PurchaseDto dto = new PurchaseDto();
+
                 dto.setPrice(Integer.parseInt(element1.getElementsByClass("price-val").text()));
                 dto.setLocation(element1.getElementsByClass("location").text());
                 dto.setExtract(element1.getElementsByClass("bill_of_sale").text());
                 dto.setRepair(element1.getElementsByClass("repair").tagName("span").text());
-                dto.setRooms(Integer.parseInt(element1.select("ul.name li").get(0).text()));
-                dto.setSquareMeter(Integer.parseInt(element1.select("ul.name li").get(1).text()));
+                try {
+                    dto.setRooms(Integer.parseInt(element1.select("ul.name li").get(0).text()));
+                } catch (IndexOutOfBoundsException exception) {
+                    continue;
+                }
+
+                try {
+                    dto.setSquareMeter(Integer.parseInt(element1.select("ul.name li").get(1).text()));
+                } catch (IndexOutOfBoundsException exception) {
+                    continue;
+                }
+
                 try {
                     dto.setCountOfFloor(Integer.parseInt(element1.select("ul.name li").get(2).text()));
                 } catch (IndexOutOfBoundsException exception) {
@@ -54,9 +65,3 @@ public class JsoupPurchase {
         return dtoList;
     }
 }
-
-
-
-
-
-

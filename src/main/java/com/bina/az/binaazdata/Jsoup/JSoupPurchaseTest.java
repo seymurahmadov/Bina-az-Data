@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class JSoupPurchaseTest {
     public static void main(String[] args) throws IOException {
-        Document pageCount = Jsoup.connect("https://bina.az/alqi-satqi/menziller").get();
+        Document pageCount = Jsoup.connect("https://bina.az/alqi-satqi").get();
 
         Elements page = pageCount.getElementsByClass("page");
 
@@ -19,45 +19,49 @@ public class JSoupPurchaseTest {
 
         for (int i = 1; i <= Integer.parseInt(pageNumber); i++) {
 
-            Document document = Jsoup.connect("https://bina.az/alqi-satqi/menziller?page=" + i).get();
+            Document document = Jsoup.connect("https://bina.az/alqi-satqi?page=" + i).get();
+
 
             Elements div = document.getElementsByClass("items-i");
 
 
+
             for (Element element1 : div) {
+
+
                 Elements price = element1.getElementsByClass("price-val");
                 Elements location = element1.getElementsByClass("location");
                 Elements extract = element1.getElementsByClass("bill_of_sale");
                 Elements repair = element1.getElementsByClass("repair");
                 repair.tagName("span");
                 Element rooms = element1.select("ul.name li").get(0);
-                Element squareMeter = element1.select("ul.name li").get(1);
 
-                Elements category = element.getElementsByClass("slider_image swiper-slide");
-                category.select("img");
+                Elements select = element1.getElementsByAttribute("href");
+                String href = select.attr("href");
+                System.out.println(href);
+                Document document1=Jsoup.connect(href).get();
+                Elements category = document1.getElementsByClass("parameters");
+                category.tagName("tr").first();
 
-                String altText= category.attr("alt");
-
-                String[] altParts= altText.split(" ");
-                String firstPart =altParts[2];
-                String secondoPart= altParts[3];
-                System.out.println(firstPart + secondoPart);
 
                 try {
+                    Element squareMeter = element1.select("ul.name li").get(1);
                     Element countOfFloor = element1.select("ul.name li").get(2);
 
                     System.out.println(price.text() + " AZN " + "****" + location.text() + "****" + extract.text() +
-                            "****" + repair.text() + "**** " + rooms.text() + "****" + squareMeter.text() + "****" + countOfFloor.text());
+                            "****" + repair.text() + "**** " + rooms.text() + "****" + squareMeter.text() + "****"
+                            + countOfFloor.text() + "****" + category.text());
 
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println(price.text() + " AZN " + "****" + location.text() + "****" + extract.text() +
-                            "****" + repair.text() + "**** " + rooms.text() + "****" + squareMeter.text());
+                            "****" + repair.text() + "**** " + rooms.text() + "****" + category.text());
                 }
 
 
-
-
             }
+
+
+
         }
     }
 }

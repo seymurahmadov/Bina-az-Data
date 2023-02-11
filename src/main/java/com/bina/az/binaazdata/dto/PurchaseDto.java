@@ -1,5 +1,6 @@
 package com.bina.az.binaazdata.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 
@@ -22,6 +23,8 @@ public class PurchaseDto {
     private int countOfFloor;
 
     private int squareMeter;
+
+    private int sot;
 
     private String category;
 }

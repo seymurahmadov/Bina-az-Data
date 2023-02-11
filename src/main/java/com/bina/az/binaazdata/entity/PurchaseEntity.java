@@ -1,13 +1,13 @@
 package com.bina.az.binaazdata.entity;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-import javax.persistence.*;
 
 @Entity
 @Table(name = "purchase")
@@ -43,7 +43,7 @@ public class PurchaseEntity {
     @Column(name = "count_of_floor")
     private int countOfFloor;
 
-    @Column(name = "square_meter")
+    @Column(name = "square_meter/sot")
     private int squareMeter;
 
     @Column(name = "category")

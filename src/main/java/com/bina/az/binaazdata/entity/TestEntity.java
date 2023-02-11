@@ -1,9 +1,9 @@
 package com.bina.az.binaazdata.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.persistence.*;
 
 @Entity
 @Table(name="Test")
