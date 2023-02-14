@@ -25,7 +25,6 @@ public class JSoupPurchaseTest {
             Elements div = document.getElementsByClass("items-i");
 
 
-
             for (Element element1 : div) {
 
 
@@ -36,32 +35,82 @@ public class JSoupPurchaseTest {
                 repair.tagName("span");
                 Element rooms = element1.select("ul.name li").get(0);
 
-                Elements select = element1.getElementsByAttribute("href");
-                String href = select.attr("href");
-                System.out.println(href);
-                Document document1=Jsoup.connect(href).get();
-                Elements category = document1.getElementsByClass("parameters");
-                category.tagName("tr").first();
 
 
-                try {
-                    Element squareMeter = element1.select("ul.name li").get(1);
-                    Element countOfFloor = element1.select("ul.name li").get(2);
 
-                    System.out.println(price.text() + " AZN " + "****" + location.text() + "****" + extract.text() +
-                            "****" + repair.text() + "**** " + rooms.text() + "****" + squareMeter.text() + "****"
-                            + countOfFloor.text() + "****" + category.text());
-
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println(price.text() + " AZN " + "****" + location.text() + "****" + extract.text() +
-                            "****" + repair.text() + "**** " + rooms.text() + "****" + category.text());
-                }
+                Elements href = element1.getElementsByAttribute("href");
+                String link = href.attr("abs:href");
+                Document document1 = Jsoup.connect(link).get();
 
 
+
+
+
+
+//////
+//                Elements latitude = document1.select("#item_map");
+//                String latitudeString=   latitude.attr("data-lat");
+//                System.out.println(latitudeString);
+//
+//                Elements longitude = document1.select("#item_map");
+//                String longitudeString=   longitude.attr("data-lng");
+//                System.out.println(longitudeString);
+
+
+
+
+
+
+
+//                try{
+//                    Elements announcementId = document1.select("div.item_info"); // sehv var birin gosterir birin gostermir !!!
+//                    String announcementIdString = announcementId.tagName("p").text().split(" ")[2];
+//                    System.out.println(announcementIdString);
+//                }catch (ArrayIndexOutOfBoundsException exception){
+//                    System.out.println("Reklam elandir. Id yoxdur");
+//                }
+//
+//                Element category = document1.getElementsByTag("tr").first();
+//
+//                String categoryString = category.text().substring(11);
+//                System.out.println(categoryString);
+
+
+//                Element element2 = element1.select("ul.name li").get(1);
+//                System.out.println(element2.text());
+
+//                        try {
+//                        Element squareMeter = element1.select("ul.name li").get(1);
+//                        Element countOfFloor = element1.select("ul.name li").get(2);
+//
+//
+//
+
+                Elements elements = document1.getElementsByTag("td"); //area
+                String area = elements.text();
+
+                System.out.println(area);
+
+//
+//
+//
+//
+//
+//
+//
+//                    System.out.println(price.text() + " AZN " + "****" + location.text() + "****" + extract.text() +
+//                            "****" + repair.text() + "**** " + rooms.text() + "****" + squareMeter.text() + "****"
+//                            + countOfFloor.text() + "****" + categoryString + "****" + announcementIdString);
+//
+//                    } catch (Exception   e) {
+//                    System.out.println(price.text() + " AZN " + "****" + location.text() + "****" + extract.text() +
+//                            "****" + repair.text() + "**** " + rooms.text() +  "****" + announcementIdString);
+//                    }
+////
+////
             }
 
 
-
+            }
         }
     }
-}

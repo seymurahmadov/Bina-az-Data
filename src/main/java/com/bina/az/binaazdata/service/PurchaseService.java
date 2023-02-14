@@ -24,7 +24,7 @@ private final PurchaseRepository purchaseRepository;
                 .repair(purchaseDto.getRepair())
                 .rooms(purchaseDto.getRooms())
                 .countOfFloor(purchaseDto.getCountOfFloor())
-                .squareMeter(purchaseDto.getSquareMeter())
+                .squareMeter(purchaseDto.getArea())
                 .category(purchaseDto.getCategory())
                 .build();
 
