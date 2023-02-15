@@ -1,6 +1,6 @@
 package com.bina.az.binaazdata.service;
 
-import com.bina.az.binaazdata.dto.PurchaseDto;
+import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseEntity;
 import com.bina.az.binaazdata.repository.PurchaseRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ private final PurchaseRepository purchaseRepository;
         this.purchaseRepository = purchaseRepository;
     }
 
-    public PurchaseEntity addNewPurchaseData(PurchaseDto purchaseDto){
+    public PurchaseEntity addNewPurchaseData(PurchaseNewBuildingDto purchaseDto){
         PurchaseEntity purchaseEntity= PurchaseEntity.builder()
                 .id(purchaseDto.getId())
                 .announcementId(purchaseDto.getAnnouncementId())

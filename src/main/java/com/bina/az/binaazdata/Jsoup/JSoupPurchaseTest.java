@@ -5,12 +5,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.sound.midi.Soundbank;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JSoupPurchaseTest {
     public static void main(String[] args) throws IOException {
-        Document pageCount = Jsoup.connect("https://bina.az/alqi-satqi").get();
-
+        Document pageCount = Jsoup.connect("https://bina.az/alqi-satqi/obyektler").get();
+//        https://bina.az/alqi-satqi
         Elements page = pageCount.getElementsByClass("page");
 
         int size = page.size();
@@ -19,8 +22,8 @@ public class JSoupPurchaseTest {
 
         for (int i = 1; i <= Integer.parseInt(pageNumber); i++) {
 
-            Document document = Jsoup.connect("https://bina.az/alqi-satqi?page=" + i).get();
-
+            Document document = Jsoup.connect("https://bina.az/alqi-satqi/obyektler?page=" + i).get();
+//            https://bina.az/alqi-satqi?page=
 
             Elements div = document.getElementsByClass("items-i");
 
@@ -84,12 +87,68 @@ public class JSoupPurchaseTest {
 //                        Element countOfFloor = element1.select("ul.name li").get(2);
 //
 //
-//
+
+
+                // Kateqoriya Ofis Sahə 560 m² Binanın növü Ev / Mənzil Otaq sayı 8 Çıxarış var İpoteka var Təmir var
 
                 Elements elements = document1.getElementsByTag("td"); //area
                 String area = elements.text();
+//                System.out.println(area);
 
-                System.out.println(area);
+
+
+                    Pattern pattern= Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
+                    Matcher matcher= pattern.matcher(area);
+                    if (matcher.find()){
+                        System.out.println(matcher.group(1));
+                    }
+
+
+
+//                System.out.println(elements.text());
+
+//                Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
+//                Matcher matcher=pattern.matcher(area);
+//                if(matcher.find()){
+//                    System.out.println(matcher.group(1));
+//                }
+
+
+
+
+
+                // Sahə 600 m² Torpaq sahəsi 11 sot
+
+//                Pattern pattern = Pattern.compile("(?<=Villa)(.*\\n?)(?=Otaq)");
+//                Matcher matcher = pattern.matcher(area);
+//                if (matcher.find()){
+//                    String group = matcher.group(1);
+////                    System.out.println(group);
+//                    String[] sentence = group.split(" ");
+//                    String homeArea = sentence[2];
+//                    String landArea = sentence[6];
+//                    System.out.println("Kv " +  homeArea + "Tor: " +  landArea);
+//                }
+//
+
+
+
+
+
+
+
+
+
+//
+//       ****         Element category = document1.getElementsByTag("tr").first();
+//                String categoryString = category.text().substring(11);
+//                System.out.println(categoryString);
+//
+//                if (category.equals("Ev / Villa")){
+//
+//                }
+
+
 
 //
 //

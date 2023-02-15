@@ -1,6 +1,6 @@
 package com.bina.az.binaazdata.controllers;
 
-import com.bina.az.binaazdata.dto.PurchaseDto;
+import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseEntity;
 import com.bina.az.binaazdata.service.PurchaseService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ public class PurchaseController {
     }
 
     @PostMapping("/addnewdata")
-    public PurchaseEntity addNewData(@RequestBody PurchaseDto dto){
+    public PurchaseEntity addNewData(@RequestBody PurchaseNewBuildingDto dto){
        return purchaseService.addNewPurchaseData(dto);
 
 

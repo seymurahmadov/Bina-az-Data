@@ -1,4 +1,4 @@
-package com.bina.az.binaazdata.Jsoup;
+package com.bina.az.binaazdata.Jsoup.rent;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
