@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name = "purchase")
+@Table(name = "purchase_new_building")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PurchaseEntity {
+public class PurchaseNewBuildingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,10 +44,14 @@ public class PurchaseEntity {
     private int countOfFloor;
 
     @Column(name = "square_meter/sot")
-    private int squareMeter;
+    private int area;
 
     @Column(name = "category")
     private String category;
+
+    private String latitude; //+
+
+    private String longitude; //+
 
 
 
