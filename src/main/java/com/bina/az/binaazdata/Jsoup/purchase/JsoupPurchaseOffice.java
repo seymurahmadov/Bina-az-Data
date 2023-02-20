@@ -1,8 +1,6 @@
 package com.bina.az.binaazdata.Jsoup.purchase;
 
-import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.dto.purchase.PurchaseOfficeDto;
-import org.h2.bnf.context.DbTableOrView;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

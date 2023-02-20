@@ -6,6 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,17 +14,19 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+@Service
 public class JsoupPurchaseNewBuilding {
 
-    public List purchaseJsoupNewBuildingData() throws IOException {
+    public ArrayList <PurchaseNewBuildingDto> purchaseJsoupNewBuildingData() throws IOException {
 
-        List<PurchaseNewBuildingDto> dtoList = new ArrayList<>();
+        ArrayList<PurchaseNewBuildingDto> dtoList = new ArrayList<>();
 
         Document pageCount = Jsoup.connect("https://bina.az/alqi-satqi").get();
 
         Elements page = pageCount.getElementsByClass("page");
 
-        int size = page.size();
+        int size = 2;
         Element element = page.get(size - 1);
         String pageNumber = element.text();
 
@@ -50,31 +53,31 @@ public class JsoupPurchaseNewBuilding {
                     PurchaseNewBuildingDto dto = new PurchaseNewBuildingDto();
 
 
-                    dto.setPrice(Integer.parseInt(element1.getElementsByClass("price-val").text()));
+                    dto.setPrice(element1.getElementsByClass("price-val").text());
                     dto.setLocation(element1.getElementsByClass("location").text());
-                    dto.setRepair(element1.getElementsByClass("repair").tagName("span").text());
-
                     try {
+                        dto.setRepair(element1.getElementsByClass("repair").tagName("span").text());
+                    }catch (Exception e){
+                        dto.setRepair("No Repair");
+                    }
+
+
+
+                    try { //Extract
                         dto.setExtract(element1.getElementsByClass("bill_of_sale").text());
                     } catch (Exception e) {
                         dto.setExtract("No Extract");
                     }
-                    try {
-                        dto.setRooms(Integer.parseInt(element1.select("ul.name li").get(0).text()));
+                    try { //rooms
+                        dto.setRooms(element1.select("ul.name li").get(0).text());
                     } catch (IndexOutOfBoundsException exception) {
-                        dto.setRooms(Integer.parseInt("No Rooms"));
+                        dto.setRooms(("No Rooms"));
                     }
 
                     try {
-                        dto.setArea(Integer.parseInt(element1.select("ul.name li").get(1).text()));
+                        dto.setCountOfFloor(element1.select("ul.name li").get(2).text());
                     } catch (IndexOutOfBoundsException exception) {
-                        dto.setArea(Integer.parseInt("No Area"));
-                    }
-
-                    try {
-                        dto.setCountOfFloor(Integer.parseInt(element1.select("ul.name li").get(2).text()));
-                    } catch (IndexOutOfBoundsException exception) {
-                        dto.setCountOfFloor(Integer.parseInt("No Count Of Floor"));
+                        dto.setCountOfFloor(("No Count Of Floor"));
                     }
 
 
@@ -86,17 +89,17 @@ public class JsoupPurchaseNewBuilding {
                         dto.setAnnouncementId(Integer.parseInt("No AnnouncementID"));
                     }
 
-                    try {
+                    try { //area
                         Elements elements = document1.getElementsByTag("td"); //area
                         String area = elements.text();
 
                         Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
                         Matcher matcher=pattern.matcher(area);
                         if(matcher.find()){
-                            dto.setArea(Integer.parseInt(matcher.group(1)));
+                            dto.setArea((matcher.group(1)));
                         }
                     }catch (Exception e){
-                        dto.setArea(Integer.parseInt("No Area"));
+                        dto.setArea(("No Area"));
                     }
 
                     try { //Category

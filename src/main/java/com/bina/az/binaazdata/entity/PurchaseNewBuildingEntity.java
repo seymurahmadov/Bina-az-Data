@@ -26,7 +26,7 @@ public class PurchaseNewBuildingEntity {
     private int announcementId;
 
     @Column(name = "price")
-    private int price;
+    private String price;
 
     @Column(name = "location")
     private String location;
@@ -38,13 +38,13 @@ public class PurchaseNewBuildingEntity {
     private String repair;
 
     @Column(name = "rooms")
-    private int rooms;
+    private String rooms;
 
     @Column(name = "count_of_floor")
-    private int countOfFloor;
+    private String countOfFloor;
 
-    @Column(name = "square_meter/sot")
-    private int area;
+    @Column(name = "area")
+    private String area;
 
     @Column(name = "category")
     private String category;
