@@ -11,6 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JSoupPurchaseTest {
+
+
     public static void main(String[] args) throws IOException {
         Document pageCount = Jsoup.connect("https://bina.az/alqi-satqi").get();
 //        https://bina.az/alqi-satqi
@@ -25,8 +27,8 @@ public class JSoupPurchaseTest {
             Document document = Jsoup.connect(" https://bina.az/alqi-satqi?page=" + i).get();
 //            https://bina.az/alqi-satqi?page=
 
-            Elements div = document.getElementsByClass("items-i");
-
+//            Elements div = document.getElementsByClass("div.items_list div.items-i").not(".vipped");
+            Elements div = document.getElementsByClass("div.items_list div.items-i").not(".vipped");
 
 
 
@@ -50,6 +52,8 @@ public class JSoupPurchaseTest {
                 Elements href = element1.getElementsByAttribute("href");
                 String link = href.attr("abs:href");
                 Document document1 = Jsoup.connect(link).get();
+
+//
 
 
 

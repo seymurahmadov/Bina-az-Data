@@ -48,7 +48,7 @@ private final JsoupPurchaseNewBuilding jsoupPurchaseNewBuildingService;
 
             newBuildingEntity.setId(item.getId());
             newBuildingEntity.setAnnouncementId(item.getAnnouncementId());
-                newBuildingEntity.setRepair(item.getRepair());
+            newBuildingEntity.setRepair(item.getRepair());
             newBuildingEntity.setCategory(item.getCategory());
             newBuildingEntity.setLocation(item.getLocation());
             newBuildingEntity.setPrice(item.getPrice());
