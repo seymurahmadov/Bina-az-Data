@@ -17,9 +17,9 @@ import java.util.regex.Pattern;
 @Service
 public class JsoupPurchaseNewBuilding {
 
-    public ArrayList <PurchaseNewBuildingDto> purchaseJsoupNewBuildingData() throws IOException {
+    public PurchaseNewBuildingDto purchaseJsoupNewBuildingData() throws IOException {
 
-        ArrayList<PurchaseNewBuildingDto> dtoList = new ArrayList<>();
+
 
         Document pageCount = Jsoup.connect("https://bina.az/alqi-satqi").get();
 
@@ -29,11 +29,15 @@ public class JsoupPurchaseNewBuilding {
         Element element = page.get(size - 1);
         String pageNumber = element.text();
 
+        PurchaseNewBuildingDto dto = new PurchaseNewBuildingDto();
+
+
         for (int i = 1; i <= Integer.parseInt(pageNumber); i++) {
 
             Document document = Jsoup.connect("https://bina.az/alqi-satqi?page=" + i).get();
 
             Elements div = document.getElementsByClass("items-i");
+
 
 
             for (Element element1 : div) {
@@ -49,13 +53,21 @@ public class JsoupPurchaseNewBuilding {
 
                 if (categoryStringTest.equalsIgnoreCase("Yeni tikili")) {
 
-                    PurchaseNewBuildingDto dto = new PurchaseNewBuildingDto();
 
 
                     dto.setPrice(element1.getElementsByClass("price-val").text());
                     dto.setLocation(element1.getElementsByClass("location").text());
+
+
                     try {
-                        dto.setRepair(element1.getElementsByClass("repair").tagName("span").text());
+                        Elements repair = document1.getElementsByTag("td");
+                        String repairString = repair.text();
+
+                        Pattern pattern = Pattern.compile("(?<=Təmir\\s)(\\w+)");
+                        Matcher matcher = pattern.matcher(repairString);
+                        if (matcher.find()){
+                           dto.setRepair(matcher.group(1));
+                        }
                     }catch (Exception e){
                         dto.setRepair("No Repair");
                     }
@@ -63,7 +75,15 @@ public class JsoupPurchaseNewBuilding {
 
 
                     try { //Extract
-                        dto.setExtract(element1.getElementsByClass("bill_of_sale").text());
+                        Elements extract = document1.getElementsByTag("td");
+
+                        String string= extract.text();
+
+                        Pattern pattern = Pattern.compile("(?<=Çıxarış\\s)(\\w+)");
+                        Matcher matcher = pattern.matcher(string);
+                        if (matcher.find()){
+                            dto.setExtract(matcher.group(1));
+                        }
                     } catch (Exception e) {
                         dto.setExtract("No Extract");
                     }
@@ -127,7 +147,7 @@ public class JsoupPurchaseNewBuilding {
                     }
 
 
-                    dtoList.add(dto);
+
                 }
             else {
                 continue;
@@ -135,6 +155,6 @@ public class JsoupPurchaseNewBuilding {
             }
 
         }
-        return dtoList;
+        return dto ;
     }
 }

@@ -19,7 +19,7 @@ public class JSoupPurchaseTest {
         Elements page = pageCount.getElementsByClass("page");
 
         int size = page.size();
-        Element element = page.get(size-1);
+        Element element = page.get(size - 1);
         String pageNumber = element.text();
 
         for (int i = 1; i <= Integer.parseInt(pageNumber); i++) {
@@ -27,10 +27,8 @@ public class JSoupPurchaseTest {
             Document document = Jsoup.connect(" https://bina.az/alqi-satqi?page=" + i).get();
 //            https://bina.az/alqi-satqi?page=
 
-//            Elements div = document.getElementsByClass("div.items_list div.items-i").not(".vipped");
-            Elements div = document.getElementsByClass("div.items_list div.items-i").not(".vipped");
-
-
+            Elements div = document.select("div.items_list div.items-i").not(".vipped");
+//          Elements div = document.getElementsByClass("items-i");
 
 
             for (Element element1 : div) {
@@ -38,23 +36,111 @@ public class JSoupPurchaseTest {
 
                 Elements price = element1.getElementsByClass("price-val");
                 Elements location = element1.getElementsByClass("location");
-                Elements extract = element1.getElementsByClass("bill_of_sale");
-//                System.out.println(extract.text());
-                Elements repair = element1.getElementsByClass("repair");
-                repair.tagName("span");
-                System.out.println(repair.text());
+//                Elements extract = element1.getElementsByClass("bill_of_sale");
+//                Elements repair = element1.getElementsByClass("repair");
+//                repair.tagName("span");
                 Element rooms = element1.select("ul.name li").get(0);
-
-
-
 
 
                 Elements href = element1.getElementsByAttribute("href");
                 String link = href.attr("abs:href");
                 Document document1 = Jsoup.connect(link).get();
 
-//
 
+
+
+
+
+//                Elements extract = document1.getElementsByTag("td");
+//
+//                String string= extract.text();
+//
+//                Pattern pattern = Pattern.compile("(?<=Çıxarış\\s)(\\w+)");
+//                Matcher matcher = pattern.matcher(string);
+//                if (matcher.find()){
+//                    System.out.println(matcher.group(1));
+//                }
+
+
+//                Elements repair = document1.getElementsByTag("td");
+//                String repairString = repair.text();
+//
+//                Pattern pattern = Pattern.compile("(?<=Təmir\\s)(\\w+)");
+//                Matcher matcher = pattern.matcher(repairString);
+//                if (matcher.find()){
+//                    System.out.println(matcher.group(1));
+//                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                Pattern pattern = Pattern.compile("\\\\bvar\\\\b");
+//                Matcher matcher = pattern.matcher(allWord);
+//                if (matcher.find()){
+//                    String group= matcher.group(1);
+//                    System.out.println(group);
+//                }
+
+
+
+
+//                Elements elements = document1.getElementsByTag("td"); //area
+//                String area = elements.text();
+////                System.out.println(area);
+//
+//
+//                Pattern pattern = Pattern.compile("(?<=Villa)(.*\\n?)(?=Otaq)");
+//                Matcher matcher = pattern.matcher(area);
+//                if (matcher.find()) {
+//                    String group = matcher.group(1);
+//                    System.out.println(group);
 
 
 //                Elements extractNew = document1.getElementsByTag("tr");
@@ -62,8 +148,6 @@ public class JSoupPurchaseTest {
 //
 //                String extraxtString = extractNew.text();
 //                Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)")
-
-
 
 
 //                Elements elements = document1.getElementsByTag("td"); //area
@@ -75,13 +159,10 @@ public class JSoupPurchaseTest {
 //                    dto.setArea((matcher.group(1)));
 //                }
 
-//                Element category = document1.getElementsByTag("tr").first();
 //
-////                String categoryString = category.text().substring(11);
-////                System.out.println(categoryString);
-//
-//                System.out.println(category.text());
-
+                /*Kateqoriya Qaraj Sahə 15.6 m² Çıxarış yoxdur
+Kateqoriya Torpaq Sahə 42 sot Çıxarış var
+Kateqoriya Yeni tikili Mərtəbə 2 / 7 Sahə 65 m² Otaq sayı 3 Çıxarış yoxdur */
 
 
 //////
@@ -94,11 +175,6 @@ public class JSoupPurchaseTest {
 //                System.out.println(longitudeString);
 
 
-
-
-
-
-
 //                try{
 //                    Elements announcementId = document1.select("div.item_info"); // sehv var birin gosterir birin gostermir !!!
 //                    String announcementIdString = announcementId.tagName("p").text().split(" ")[2];
@@ -107,7 +183,6 @@ public class JSoupPurchaseTest {
 //                    System.out.println("Reklam elandir. Id yoxdur");
 //                }
 //
-
 
 
 //                Element element2 = element1.select("ul.name li").get(1);
@@ -120,7 +195,7 @@ public class JSoupPurchaseTest {
 //
 
 
-                // Kateqoriya Ofis Sahə 560 m² Binanın növü Ev / Mənzil Otaq sayı 8 Çıxarış var İpoteka var Təmir var
+                    // Kateqoriya Ofis Sahə 560 m² Binanın növü Ev / Mənzil Otaq sayı 8 Çıxarış var İpoteka var Təmir var
 
 //                Elements elements = document1.getElementsByTag("td"); //area
 //                String area = elements.text();
@@ -135,7 +210,6 @@ public class JSoupPurchaseTest {
 //                    }
 
 
-
 //                System.out.println(elements.text());
 
 //                Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
@@ -145,10 +219,7 @@ public class JSoupPurchaseTest {
 //                }
 
 
-
-
-
-                // Sahə 600 m² Torpaq sahəsi 11 sot
+                    // Sahə 600 m² Torpaq sahəsi 11 sot
 
 //                Pattern pattern = Pattern.compile("(?<=Villa)(.*\\n?)(?=Otaq)");
 //                Matcher matcher = pattern.matcher(area);
@@ -163,13 +234,6 @@ public class JSoupPurchaseTest {
 //
 
 
-
-
-
-
-
-
-
 //
 //       ****         Element category = document1.getElementsByTag("tr").first();
 //                String categoryString = category.text().substring(11);
@@ -178,7 +242,6 @@ public class JSoupPurchaseTest {
 //                if (category.equals("Ev / Villa")){
 //
 //                }
-
 
 
 //
@@ -198,9 +261,10 @@ public class JSoupPurchaseTest {
 //                    }
 ////
 ////
-            }
+                }
 
 
             }
-        }
+
     }
+}
