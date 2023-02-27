@@ -9,13 +9,13 @@ import java.io.IOException;
 
 public class JsoupTestPage {
     public static void main(String[] args) throws IOException {
-        //2354
+        //2369
 
-        boolean endPage = true;
-        int page = 1;
+        boolean notEndOfPage = true;
+        int page = 2369;
 
         int i = page;
-        while (endPage) {
+        while (notEndOfPage) {
 
 
             Document pageTest = Jsoup.connect(" https://bina.az/alqi-satqi?page=" + i).get();
@@ -23,19 +23,22 @@ public class JsoupTestPage {
 
             if (elements.text().equals("Heç bir elan tapılmayıb")) {
 
-                endPage = false;
+                notEndOfPage = false;
                 System.out.println("Bitti");
 
             } else {
                 Document document = Jsoup.connect(" https://bina.az/alqi-satqi?page=" + i).get();
 
-//                Elements div = document.select("div.items_list div.items-i").not(".vipped");
-                  Elements div = document.getElementsByClass("items-i");
+                Elements div = document.select("div.items_list div.items-i").not("items-i featured vipped");
+//                  Elements div = document.getElementsByClass("items-i");
+//                Elements div = document.getElementsByClass("items-i");
+
 
 
                 for (Element element1 : div) {
                     Elements price = element1.getElementsByClass("price-val");
-                    System.out.println(price.text());
+                    Elements location = element1.getElementsByClass("location");
+                    System.out.println(price.text() + " " + location.text());
                 }
 
                 i++;

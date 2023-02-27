@@ -47,6 +47,10 @@ public class JSoupPurchaseTest {
                 Document document1 = Jsoup.connect(link).get();
 
 
+                Element category = document1.getElementsByTag("tr").first();
+                String categoryString = category.text().substring(11);
+                System.out.println(categoryString);
+
 
 
 

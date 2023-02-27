@@ -5,6 +5,7 @@ import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class PurchaseNewBuildingService {
 
 private final PurchaseNewBuildingRepository purchaseNewBuildingRepository;
 private final JsoupPurchaseNewBuilding jsoupPurchaseNewBuildingService;
+
+
 
 
     public PurchaseNewBuildingEntity saveNewBuildingJsoupData() throws IOException {
@@ -37,7 +40,7 @@ private final JsoupPurchaseNewBuilding jsoupPurchaseNewBuildingService;
                 .build();
 
 
-        return   purchaseNewBuildingRepository.save(newBuildingEntity);
+        return    purchaseNewBuildingRepository.save(newBuildingEntity);
 
         }
 
