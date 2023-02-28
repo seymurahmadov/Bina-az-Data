@@ -32,6 +32,7 @@
 //                endPageTest = false;
 //
 //            } else {
+//
 //                Document document = Jsoup.connect(" https://bina.az/alqi-satqi?page=" + i).get();
 //
 //                Elements div = document.select("div.items_list div.items-i").not("items-i featured vipped");
