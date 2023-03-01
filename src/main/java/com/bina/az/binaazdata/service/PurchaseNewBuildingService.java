@@ -20,27 +20,27 @@ private final JsoupPurchaseNewBuilding jsoupPurchaseNewBuildingService;
 
 
 
-    public PurchaseNewBuildingEntity saveNewBuildingJsoupData() throws IOException {
+    public void saveNewBuildingJsoupData() throws IOException {
 
-        PurchaseNewBuildingDto purchaseNewBuildingDto = jsoupPurchaseNewBuildingService.purchaseJsoupNewBuildingData();
-
-        PurchaseNewBuildingEntity newBuildingEntity =  PurchaseNewBuildingEntity.builder()
-                .id(purchaseNewBuildingDto.getId())
-                .announcementId(purchaseNewBuildingDto.getAnnouncementId())
-                .repair(purchaseNewBuildingDto.getRepair())
-                .category(purchaseNewBuildingDto.getCategory())
-                .location(purchaseNewBuildingDto.getLocation())
-                .price(purchaseNewBuildingDto.getPrice())
-                .countOfFloor(purchaseNewBuildingDto.getCountOfFloor())
-                .latitude(purchaseNewBuildingDto.getLatitude())
-                .longitude(purchaseNewBuildingDto.getLongitude())
-                .extract(purchaseNewBuildingDto.getExtract())
-                .rooms(purchaseNewBuildingDto.getRooms())
-                .area(purchaseNewBuildingDto.getArea())
-                .build();
-
-
-        return    purchaseNewBuildingRepository.save(newBuildingEntity);
+//        PurchaseNewBuildingDto purchaseNewBuildingDto = jsoupPurchaseNewBuildingService.purchaseJsoupNewBuildingData();
+//
+//        PurchaseNewBuildingEntity newBuildingEntity =  PurchaseNewBuildingEntity.builder()
+//                .id(purchaseNewBuildingDto.getId())
+//                .announcementId(purchaseNewBuildingDto.getAnnouncementId())
+//                .repair(purchaseNewBuildingDto.getRepair())
+//                .category(purchaseNewBuildingDto.getCategory())
+//                .location(purchaseNewBuildingDto.getLocation())
+//                .price(purchaseNewBuildingDto.getPrice())
+//                .countOfFloor(purchaseNewBuildingDto.getCountOfFloor())
+//                .latitude(purchaseNewBuildingDto.getLatitude())
+//                .longitude(purchaseNewBuildingDto.getLongitude())
+//                .extract(purchaseNewBuildingDto.getExtract())
+//                .rooms(purchaseNewBuildingDto.getRooms())
+//                .area(purchaseNewBuildingDto.getArea())
+//                .build();
+//
+//
+//        return    purchaseNewBuildingRepository.save(newBuildingEntity);
 
         }
 

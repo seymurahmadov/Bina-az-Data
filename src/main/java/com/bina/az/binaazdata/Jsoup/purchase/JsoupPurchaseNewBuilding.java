@@ -4,17 +4,14 @@ package com.bina.az.binaazdata.Jsoup.purchase;
 import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
-import com.bina.az.binaazdata.service.PurchaseNewBuildingService;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +27,10 @@ public class JsoupPurchaseNewBuilding {
 
     public PurchaseNewBuildingDto purchaseJsoupNewBuildingData() throws IOException {
 
-////////////////////////////////////////////////
+
+
+
+
 
         PurchaseNewBuildingDto dto = new PurchaseNewBuildingDto();
 
@@ -43,7 +43,7 @@ public class JsoupPurchaseNewBuilding {
         while (notEndOfPage) {
 
 
-            Document pageTest = Jsoup.connect(" https://bina.az/alqi-satqi?page=" + i).get();
+            Document pageTest = Jsoup.connect("https://bina.az/alqi-satqi?page=" + i).get();
             Element elements = pageTest.getElementsByTag("p").first();
 
             if (elements.text().equals("Heç bir elan tapılmayıb")) {
@@ -173,6 +173,22 @@ public class JsoupPurchaseNewBuilding {
 
 
 
+                    PurchaseNewBuildingEntity newBuildingEntity =  PurchaseNewBuildingEntity.builder()
+                            .id(dto.getId())
+                            .announcementId(dto.getAnnouncementId())
+                            .repair(dto.getRepair())
+                            .category(dto.getCategory())
+                            .location(dto.getLocation())
+                            .price(dto.getPrice())
+                            .countOfFloor(dto.getCountOfFloor())
+                            .latitude(dto.getLatitude())
+                            .longitude(dto.getLongitude())
+                            .extract(dto.getExtract())
+                            .rooms(dto.getRooms())
+                            .area(dto.getArea())
+                            .build();
+
+                        newBuildingRepository.save(newBuildingEntity);
 
                 }
                 i++;
