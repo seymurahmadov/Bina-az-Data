@@ -8,13 +8,13 @@ public class PurchaseGarageDto {
 
     private int announcementId; //+
 
-    private int price; //+
+    private String price; //+
 
     private String location; //+
 
     private String extract; //+
 
-    private int area;
+    private String area;
 
     private String category; //+
 

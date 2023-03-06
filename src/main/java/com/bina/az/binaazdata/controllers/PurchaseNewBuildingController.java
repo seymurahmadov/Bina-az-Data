@@ -13,7 +13,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/binaazdata")
 @RequiredArgsConstructor
-public class PurchaseController {
+public class PurchaseNewBuildingController {
 
 
 
@@ -23,8 +23,8 @@ public class PurchaseController {
 
 
 
-    @GetMapping("/addnewdata")
-    public PurchaseNewBuildingDto addNewData() throws IOException {
+    @GetMapping("/add-purchase-new-building-data")
+    public PurchaseNewBuildingDto addNewBuildingData() throws IOException {
        return jsoupPurchaseNewBuilding.purchaseJsoupNewBuildingData();
 
 

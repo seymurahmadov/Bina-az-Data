@@ -8,13 +8,13 @@ public class PurchaseLandDto {
 
     private int announcementId; //+
 
-    private int price; //+
+    private String price; //+
 
     private String location; //+
 
     private String extract; //+
 
-    private int landArea; //+
+    private String landArea; //+
 
     private String category; //+
 

@@ -46,10 +46,15 @@ public class JSoupPurchaseTest {
                 String link = href.attr("abs:href");
                 Document document1 = Jsoup.connect(link).get();
 
+//
+//                Element category = document1.getElementsByTag("tr").first();
+//                String categoryString = category.text().substring(11);
+//                System.out.println(categoryString);
 
-                Element category = document1.getElementsByTag("tr").first();
-                String categoryString = category.text().substring(11);
-                System.out.println(categoryString);
+
+                Elements elementofLandArea = document1.getElementsByTag("td"); //area
+                String area = elementofLandArea.text();
+                System.out.println(area);
 
 
 

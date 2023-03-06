@@ -4,6 +4,7 @@ package com.bina.az.binaazdata.Jsoup.purchase;
 import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
+import com.bina.az.binaazdata.util.PurchaseNewBulildingUtil;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,15 +24,7 @@ public class JsoupPurchaseNewBuilding {
 
     private final PurchaseNewBuildingRepository newBuildingRepository;
 
-
-
-
-
-    public PurchaseNewBuildingDto purchaseJsoupNewBuildingData() throws IOException {
-
-
-
-
+         public PurchaseNewBuildingDto purchaseJsoupNewBuildingData() throws IOException {
 
 
         PurchaseNewBuildingDto dto = new PurchaseNewBuildingDto();
@@ -54,9 +47,6 @@ public class JsoupPurchaseNewBuilding {
                 System.out.println("Bitti");
 
             } else {
-
-
-
 
 
                 Document document = Jsoup.connect("https://bina.az/alqi-satqi?page=" + i).get();
@@ -173,16 +163,12 @@ public class JsoupPurchaseNewBuilding {
                         continue;
                     }
 
+                    PurchaseNewBulildingUtil util = new PurchaseNewBulildingUtil();
+                    PurchaseNewBuildingEntity purchaseNewBuildingEntity = util.newBuilding(dto);
 
-
-
+                    newBuildingRepository.save(purchaseNewBuildingEntity);
                 }
                 i++;
-
-
-
-
-
 
                 if (i==2){
                     break;

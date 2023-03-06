@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "purchase_object")
+@Table(name = "purchase_garage")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PurchaseObjectEntity {
+public class PurchaseGarageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,15 +21,13 @@ public class PurchaseObjectEntity {
 
     private int announcementId; //+
 
-    private int price; //+
+    private String price; //+
 
     private String location; //+
 
     private String extract; //+
 
-    private String repair; //+
-
-    private int area;  //+
+    private String area;
 
     private String category; //+
 

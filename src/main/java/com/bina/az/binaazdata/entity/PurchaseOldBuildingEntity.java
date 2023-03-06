@@ -22,7 +22,7 @@ public class PurchaseOldBuildingEntity {
 
     private int announcementId; //+
 
-    private int price; //+
+    private String price; //+
 
     private String location; //+
 
@@ -30,11 +30,11 @@ public class PurchaseOldBuildingEntity {
 
     private String repair; //+
 
-    private int rooms; //+
+    private String rooms; //+
 
-    private int countOfFloor;    //+
+    private String countOfFloor;    //+
 
-    private int area;
+    private String area;
 
     private String category; //+
 
