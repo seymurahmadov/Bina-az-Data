@@ -1,6 +1,6 @@
 package com.bina.az.binaazdata.controllers;
 
-import com.bina.az.binaazdata.Jsoup.purchase.JsoupPurchaseNewBuilding;
+import com.bina.az.binaazdata.JsoupService.purchase.JsoupPurchaseNewBuilding;
 import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.service.PurchaseNewBuildingService;
 import lombok.RequiredArgsConstructor;

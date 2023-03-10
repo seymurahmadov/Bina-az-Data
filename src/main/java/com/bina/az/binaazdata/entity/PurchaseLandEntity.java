@@ -33,4 +33,6 @@ public class PurchaseLandEntity {
     private String latitude; //+
 
     private String longitude; //+
+
+    private String date;
 }

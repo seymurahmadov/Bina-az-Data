@@ -1,33 +1,31 @@
-package com.bina.az.binaazdata.Jsoup.purchase;
+package com.bina.az.binaazdata.JsoupService.purchase;
 
-
-import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
-import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
-import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
-import com.bina.az.binaazdata.util.PurchaseNewBulildingUtil;
+import com.bina.az.binaazdata.dto.purchase.PurchaseObjectDto;
+import com.bina.az.binaazdata.entity.PurchaseObjectEntity;
+import com.bina.az.binaazdata.repository.PurchaseObjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
-public class JsoupPurchaseNewBuilding {
+public class JsoupPurchaseObject {
+    private final PurchaseObjectRepository repository;
 
-    private final PurchaseNewBuildingRepository newBuildingRepository;
+    public PurchaseObjectDto purchaseJsoupObjectData() throws IOException {
 
-         public PurchaseNewBuildingDto purchaseJsoupNewBuildingData() throws IOException {
+        PurchaseObjectDto dto = new PurchaseObjectDto();
 
-
-        PurchaseNewBuildingDto dto = new PurchaseNewBuildingDto();
 
 
         boolean notEndOfPage = true;
@@ -65,52 +63,42 @@ public class JsoupPurchaseNewBuilding {
                     Element categoryTest = document1.getElementsByTag("tr").first();
                     String categoryStringTest = categoryTest.text().substring(11);
 
-                    if (categoryStringTest.equalsIgnoreCase("Yeni tikili")) {
+                    if (categoryStringTest.equalsIgnoreCase("Obyekt")) {
 
 
                         dto.setPrice(element1.getElementsByClass("price-val").text());
                         dto.setLocation(element1.getElementsByClass("location").text());
+                        dto.setRepair(element1.getElementsByClass("repair").tagName("span").text());
 
+                        //Date
+                        Elements date = element1.getElementsByClass("city_when");
 
-                        try {
-                            Elements repair = document1.getElementsByTag("td");
-                            String repairString = repair.text();
-
-                            Pattern pattern = Pattern.compile("(?<=Təmir\\s)(\\w+)");
-                            Matcher matcher = pattern.matcher(repairString);
-                            if (matcher.find()) {
-                                dto.setRepair(matcher.group(1));
+                        Pattern patternDate = Pattern.compile("(?<=, )(.*\\n?)(?= )");
+                        Matcher matcherDate = patternDate.matcher(date.text());
+                        if (matcherDate.find()) {
+                            String group = matcherDate.group(1);
+                            if (group.equals("bugün")) {
+                                LocalDate today = LocalDate.now();
+                                dto.setDate(String.valueOf(today));
+                            } else if (group.equals("dünən")) {
+                                LocalDate today = LocalDate.now();
+                                dto.setDate(String.valueOf(today.minusDays(1)));
+                            } else {
+                                dto.setDate(group);
                             }
-                        } catch (Exception e) {
-                            dto.setRepair("No Repair");
                         }
 
-
-                        try { //Extract
-                            Elements extract = document1.getElementsByTag("td");
-
-                            String string = extract.text();
-
-                            Pattern pattern = Pattern.compile("(?<=Çıxarış\\s)(\\w+)");
-                            Matcher matcher = pattern.matcher(string);
-                            if (matcher.find()) {
-                                dto.setExtract(matcher.group(1));
-                            }
+                        try {
+                            dto.setExtract(element1.getElementsByClass("bill_of_sale").text());
                         } catch (Exception e) {
                             dto.setExtract("No Extract");
                         }
-                        try { //rooms
-                            dto.setRooms(element1.select("ul.name li").get(0).text());
-                        } catch (IndexOutOfBoundsException exception) {
-                            dto.setRooms(("No Rooms"));
-                        }
 
                         try {
-                            dto.setCountOfFloor(element1.select("ul.name li").get(2).text());
+                            dto.setArea(element1.select("ul.name li").get(1).text());
                         } catch (IndexOutOfBoundsException exception) {
-                            dto.setCountOfFloor(("No Count Of Floor"));
+                            dto.setArea("No Area");
                         }
-
 
                         try { //AnnouncementId
                             Elements announcementId = document1.select("div.item_info");
@@ -120,17 +108,19 @@ public class JsoupPurchaseNewBuilding {
                             dto.setAnnouncementId(Integer.parseInt("No AnnouncementID"));
                         }
 
-                        try { //area
-                            Elements areaElement = document1.getElementsByTag("td"); //area
-                            String area = areaElement.text();
+
+                        try {
+                            Elements elementOfArea = document1.getElementsByTag("td"); //area
+                            String area = elementOfArea.text();
 
                             Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
                             Matcher matcher = pattern.matcher(area);
                             if (matcher.find()) {
-                                dto.setArea((matcher.group(1)));
+                                String areaValue = matcher.group(1);
+                                dto.setArea(areaValue);
                             }
                         } catch (Exception e) {
-                            dto.setArea(("No Area"));
+                            dto.setArea("No Area");
                         }
 
                         try { //Category
@@ -163,20 +153,31 @@ public class JsoupPurchaseNewBuilding {
                         continue;
                     }
 
-                    PurchaseNewBulildingUtil util = new PurchaseNewBulildingUtil();
-                    PurchaseNewBuildingEntity purchaseNewBuildingEntity = util.newBuilding(dto);
+                    PurchaseObjectEntity objectEntity = PurchaseObjectEntity.builder()
+                            .id(dto.getId())
+                            .announcementId(dto.getAnnouncementId())
+                            .price(dto.getPrice())
+                            .location(dto.getLocation())
+                            .extract(dto.getExtract())
+                            .repair(dto.getRepair())
+                            .area(dto.getArea())
+                            .category(dto.getCategory())
+                            .longitude(dto.getLongitude())
+                            .latitude(dto.getLatitude())
+                            .date(dto.getDate())
+                            .build();
 
-                    newBuildingRepository.save(purchaseNewBuildingEntity);
+                    repository.save(objectEntity);
                 }
                 i++;
-
                 if (i==2){
                     break;
                 }
+
             }
         }
-
-       return dto;
+        return dto;
 
     }
+
 }

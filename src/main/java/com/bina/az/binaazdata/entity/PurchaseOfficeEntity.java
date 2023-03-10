@@ -23,7 +23,7 @@ public class PurchaseOfficeEntity {
 
     private int announcementId; //+
 
-    private int price; //+
+    private String price; //+
 
     private String location; //+
 
@@ -31,15 +31,17 @@ public class PurchaseOfficeEntity {
 
     private String repair; //+
 
-    private int rooms; //+
+    private String rooms; //+
 
     private String typeOfBuilding;  //+
 
-    private int area;  //+
+    private String area;  //+
 
     private String category; //+
 
     private String latitude; //+
 
     private String longitude; //+
+
+    private String date;
 }

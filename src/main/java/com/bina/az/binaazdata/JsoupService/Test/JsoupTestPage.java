@@ -1,4 +1,4 @@
-package com.bina.az.binaazdata.Jsoup.Test;
+package com.bina.az.binaazdata.JsoupService.Test;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

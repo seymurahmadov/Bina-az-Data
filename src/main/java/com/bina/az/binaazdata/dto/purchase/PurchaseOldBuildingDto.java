@@ -29,4 +29,6 @@ public class PurchaseOldBuildingDto {
 
     private String longitude; //+
 
+    private String date;
+
 }

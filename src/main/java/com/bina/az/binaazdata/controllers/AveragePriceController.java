@@ -15,11 +15,11 @@ import java.io.IOException;
 public class AveragePriceController {
 
    private final PurchaseAveragePrice  averagePrice;
-
-   @GetMapping()
-    public Double setAveragePrice( ) throws IOException {
-        return averagePrice.setAveragePrice();
-   }
+//
+//   @GetMapping()
+//    public Double setAveragePrice(String location) throws IOException {
+//        return averagePrice.setAveragePrice(location);
+//   }
 
 
 }

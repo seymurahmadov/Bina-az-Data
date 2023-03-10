@@ -1,6 +1,6 @@
 package com.bina.az.binaazdata.controllers;
 
-import com.bina.az.binaazdata.Jsoup.purchase.JsoupPurchaseLand;
+import com.bina.az.binaazdata.JsoupService.purchase.JsoupPurchaseLand;
 import com.bina.az.binaazdata.dto.purchase.PurchaseLandDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

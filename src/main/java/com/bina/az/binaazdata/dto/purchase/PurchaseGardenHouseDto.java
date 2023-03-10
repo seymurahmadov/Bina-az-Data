@@ -28,4 +28,6 @@ public class PurchaseGardenHouseDto {
 
     private String longitude; //+
 
+    private String date;
+
 }

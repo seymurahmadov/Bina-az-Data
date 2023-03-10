@@ -1,4 +1,4 @@
-package com.bina.az.binaazdata.Jsoup.purchase;
+package com.bina.az.binaazdata.JsoupService.purchase;
 
 import com.bina.az.binaazdata.dto.purchase.PurchaseGardenHouseDto;
 import com.bina.az.binaazdata.entity.PurchaseGardenHouseEntity;
@@ -11,8 +11,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,13 +64,48 @@ public class JsoupPurchaseGardenHouse {
 
                         dto.setPrice(element1.getElementsByClass("price-val").text());
                         dto.setLocation(element1.getElementsByClass("location").text());
-                        dto.setRepair(element1.getElementsByClass("repair").tagName("span").text());
 
                         try {
-                            dto.setExtract(element1.getElementsByClass("bill_of_sale").text());
-                        } catch (Exception e) {
-                            dto.setExtract("No Extract");
+                            String repairString = element1.getElementsByClass("repair").tagName("span").text();
+                            dto.setRepair(repairString);
+
+                            if (repairString.equals("")){
+                                dto.setRepair("Təmirsiz");
+                            }
+                        }catch (Exception e) {
+                            dto.setRepair("Təmirsiz");
                         }
+
+                        //Date
+                        Elements date = element1.getElementsByClass("city_when");
+
+                        Pattern patternDate = Pattern.compile("(?<=, )(.*\\n?)(?= )");
+                        Matcher matcherDate = patternDate.matcher(date.text());
+                        if (matcherDate.find()) {
+                            String group = matcherDate.group(1);
+                            if (group.equals("bugün")){
+                                LocalDate today = LocalDate.now();
+                                dto.setDate(String.valueOf(today));
+                            }else if (group.equals("dünən")){
+                                LocalDate today = LocalDate.now();
+                                dto.setDate(String.valueOf(today.minusDays(1)));
+                            }else {
+                                dto.setDate(group);
+                            }
+                        }
+
+                        try {
+                            String billOfSale = element1.getElementsByClass("bill_of_sale").text();
+                            dto.setExtract(billOfSale);
+
+                            if (billOfSale.equals("")){
+                                dto.setExtract("Çıxarış yoxdur");
+                            }
+                        } catch (Exception e) {
+                            dto.setExtract("Çıxarış yoxdur");
+                        }
+
+
                         try {
                             dto.setRooms(element1.select("ul.name li").get(0).text());
                         } catch (IndexOutOfBoundsException exception) {
@@ -91,13 +125,11 @@ public class JsoupPurchaseGardenHouse {
                             Elements elementofHomeArea = document1.getElementsByTag("td"); //area
                             String area = elementofHomeArea.text();
 
-                            Pattern pattern = Pattern.compile("(?<=Sahə\\s)(\\w+)");
+                            Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
                             Matcher matcher = pattern.matcher(area);
                             if (matcher.find()) {
                                 String group = matcher.group(1);
-                                String[] sentence = group.split(" ");
-                                String homeArea = sentence[2];
-                                dto.setHomeArea(homeArea);
+                                dto.setHomeArea(group);
                             }
 
                         } catch (Exception e) {
@@ -108,13 +140,11 @@ public class JsoupPurchaseGardenHouse {
                             Elements elementofLandArea = document1.getElementsByTag("td"); //area
                             String area = elementofLandArea.text();
 
-                            Pattern pattern = Pattern.compile("(?<=sahəsi\\s)(\\w+)");
+                            Pattern pattern = Pattern.compile("(?<=sahəsi)(.*\\n?)(?=sot)");
                             Matcher matcher = pattern.matcher(area);
                             if (matcher.find()) {
                                 String group = matcher.group(1);
-                                String[] sentence = group.split(" ");
-                                String landArea = sentence[6];
-                                dto.setLandArea(landArea);
+                                dto.setLandArea(group);
                             }
 
                         } catch (Exception e) {
@@ -165,12 +195,13 @@ public class JsoupPurchaseGardenHouse {
                             .category(dto.getCategory())
                             .longitude(dto.getLongitude())
                             .latitude(dto.getLatitude())
+                            .date(dto.getDate())
                             .build();
 
                     repository.save(gardenHouseEntity);
                 }
                 i++;
-                if (i == 2) {
+                if (i == 4) {
                     break;
                 }
 

@@ -40,4 +40,6 @@ public class PurchaseGardenHouseEntity {
     private String latitude; //+
 
     private String longitude; //+
+
+    private String date;
 }

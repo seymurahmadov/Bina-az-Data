@@ -19,6 +19,7 @@ public class PurchaseNewBulildingUtil {
                 .extract(dto.getExtract())
                 .rooms(dto.getRooms())
                 .area(dto.getArea())
+                .date(dto.getDate())
                 .build();
 
         return newBuildingEntity;

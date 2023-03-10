@@ -1,8 +1,8 @@
-package com.bina.az.binaazdata.Jsoup.purchase;
+package com.bina.az.binaazdata.JsoupService.purchase;
 
-import com.bina.az.binaazdata.dto.purchase.PurchaseGarageDto;
-import com.bina.az.binaazdata.entity.PurchaseGarageEntity;
-import com.bina.az.binaazdata.repository.PurchaseGarageRepository;
+import com.bina.az.binaazdata.dto.purchase.PurchaseHomeVillaDto;
+import com.bina.az.binaazdata.entity.PurchaseHomeVillaEntity;
+import com.bina.az.binaazdata.repository.PurchaseHomeVillaRepository;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,23 +11,21 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 @Service
 @RequiredArgsConstructor
-public class JsoupPurchaseGarage {
+public class JsoupPurchaseHomeVilla {
 
-    private final PurchaseGarageRepository repository;
+    private final PurchaseHomeVillaRepository repository;
 
-    public PurchaseGarageDto purchaseJsoupGarageData() throws IOException {
+    public PurchaseHomeVillaDto purchaseJsoupHomeVillaData() throws IOException {
 
-        PurchaseGarageDto dto = new PurchaseGarageDto();
-
-
+        PurchaseHomeVillaDto dto = new PurchaseHomeVillaDto();
         boolean notEndOfPage = true;
         int page = 1;
 
@@ -46,6 +44,7 @@ public class JsoupPurchaseGarage {
 
             } else {
 
+
                 Document document = Jsoup.connect("https://bina.az/alqi-satqi?page=" + i).get();
 
                 Elements div = document.getElementsByClass("items-i");
@@ -62,17 +61,58 @@ public class JsoupPurchaseGarage {
                     Element categoryTest = document1.getElementsByTag("tr").first();
                     String categoryStringTest = categoryTest.text().substring(11);
 
-                    if (categoryStringTest.equalsIgnoreCase("Qaraj")) {
+                    if (categoryStringTest.equalsIgnoreCase("Ev / Villa")) {
 
 
                         dto.setPrice(element1.getElementsByClass("price-val").text());
                         dto.setLocation(element1.getElementsByClass("location").text());
 
                         try {
-                            dto.setExtract(element1.getElementsByClass("bill_of_sale").text());
-                        } catch (Exception e) {
-                            dto.setExtract("No Extract");
+                            String repairString = element1.getElementsByClass("repair").tagName("span").text();
+                            dto.setRepair(repairString);
+                            if (repairString.equals("")){
+                                dto.setRepair("Təmirsiz");
+                            }
+
+                        }catch (Exception e){
+                            dto.setRepair("Təmirsiz");
                         }
+
+                        //Date
+                        Elements date = element1.getElementsByClass("city_when");
+
+                        Pattern patternDate = Pattern.compile("(?<=, )(.*\\n?)(?= )");
+                        Matcher matcherDate = patternDate.matcher(date.text());
+                        if (matcherDate.find()) {
+                            String group = matcherDate.group(1);
+                            if (group.equals("bugün")) {
+                                LocalDate today = LocalDate.now();
+                                dto.setDate(String.valueOf(today));
+                            } else if (group.equals("dünən")) {
+                                LocalDate today = LocalDate.now();
+                                dto.setDate(String.valueOf(today.minusDays(1)));
+                            } else {
+                                dto.setDate(group);
+                            }
+                        }
+
+                        //Extract
+                        try {
+                            String billOfSale = element1.getElementsByClass("bill_of_sale").text();
+                            dto.setExtract(billOfSale);
+                            if (billOfSale.equals("")){
+                                dto.setExtract("Çıxarış yoxdur");
+                            }
+                        } catch (Exception e) {
+                            dto.setExtract("Çıxarış yoxdur");
+                        }
+
+                        try {
+                            dto.setRooms(element1.select("ul.name li").get(0).text());
+                        } catch (IndexOutOfBoundsException exception) {
+                            dto.setRooms("No Rooms");
+                        }
+
 
                         try { //AnnouncementId
                             Elements announcementId = document1.select("div.item_info");
@@ -82,9 +122,26 @@ public class JsoupPurchaseGarage {
                             dto.setAnnouncementId(Integer.parseInt("No AnnouncementID"));
                         }
 
-                        try { //Area
-                            Elements elementsOfArea = document1.getElementsByTag("td"); //area
-                            String area = elementsOfArea.text();
+                        try { //HomeArea
+                            Elements elementOfHomeArea = document1.getElementsByTag("td"); //area
+                            String area = elementOfHomeArea.text();
+
+                            Pattern pattern = Pattern.compile("(?<=Villa)(.*\\n?)(?=Otaq)");
+                            Matcher matcher = pattern.matcher(area);
+                            if (matcher.find()) {
+                                String group = matcher.group(1);
+                                String[] sentence = group.split(" ");
+                                String homeArea = sentence[2];
+                                dto.setHomeArea(homeArea);
+                            }
+
+                        } catch (Exception e) {
+                            dto.setHomeArea("No Area");
+                        }
+
+                        try { //LandArea
+                            Elements elementOfLandArea = document1.getElementsByTag("td"); //area
+                            String area = elementOfLandArea.text();
 
                             Pattern pattern = Pattern.compile("(?<=Villa)(.*\\n?)(?=Otaq)");
                             Matcher matcher = pattern.matcher(area);
@@ -92,11 +149,11 @@ public class JsoupPurchaseGarage {
                                 String group = matcher.group(1);
                                 String[] sentence = group.split(" ");
                                 String landArea = sentence[6];
-                                dto.setArea(landArea);
+                                dto.setLandArea(landArea);
                             }
 
                         } catch (Exception e) {
-                            dto.setArea("No Area");
+                            dto.setLandArea("No Area");
                         }
 
 
@@ -130,29 +187,31 @@ public class JsoupPurchaseGarage {
                         continue;
                     }
 
-                    PurchaseGarageEntity garageEntity = PurchaseGarageEntity.builder()
+                    PurchaseHomeVillaEntity homeVillaEntity = PurchaseHomeVillaEntity.builder()
                             .id(dto.getId())
                             .announcementId(dto.getAnnouncementId())
                             .price(dto.getPrice())
                             .location(dto.getLocation())
                             .extract(dto.getExtract())
-                            .area(dto.getArea())
+                            .repair(dto.getRepair())
+                            .rooms(dto.getRooms())
+                            .homeArea(dto.getHomeArea())
+                            .landArea(dto.getLandArea())
                             .category(dto.getCategory())
-                            .longitude(dto.getLongitude())
                             .latitude(dto.getLatitude())
+                            .longitude(dto.getLongitude())
+                            .date(dto.getDate())
                             .build();
 
-                    repository.save(garageEntity);
+                    repository.save(homeVillaEntity);
+
 
                 }
-
-
-
                 i++;
-                if (i==2){
+
+                if(i==2){
                     break;
                 }
-
 
             }
 
@@ -160,4 +219,3 @@ public class JsoupPurchaseGarage {
         return dto;
     }
 }
-

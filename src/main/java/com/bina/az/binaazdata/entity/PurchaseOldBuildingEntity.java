@@ -41,4 +41,6 @@ public class PurchaseOldBuildingEntity {
     private String latitude; //+
 
     private String longitude; //+
+
+    private String date;
 }

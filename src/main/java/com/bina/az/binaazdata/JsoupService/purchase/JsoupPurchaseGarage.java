@@ -1,8 +1,8 @@
-package com.bina.az.binaazdata.Jsoup.purchase;
+package com.bina.az.binaazdata.JsoupService.purchase;
 
-import com.bina.az.binaazdata.dto.purchase.PurchaseOldBuildingDto;
-import com.bina.az.binaazdata.entity.PurchaseOldBuildingEntity;
-import com.bina.az.binaazdata.repository.PurchaseOldBuildingRepository;
+import com.bina.az.binaazdata.dto.purchase.PurchaseGarageDto;
+import com.bina.az.binaazdata.entity.PurchaseGarageEntity;
+import com.bina.az.binaazdata.repository.PurchaseGarageRepository;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,21 +11,21 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 @Service
 @RequiredArgsConstructor
-public class JsoupPurchaseOldBuilding {
+public class JsoupPurchaseGarage {
 
-    private final PurchaseOldBuildingRepository repository;
+    private final PurchaseGarageRepository repository;
 
+    public PurchaseGarageDto purchaseJsoupGarageData() throws IOException {
 
-    public PurchaseOldBuildingDto purchaseJsoupOldBuildingData() throws IOException {
+        PurchaseGarageDto dto = new PurchaseGarageDto();
 
-        PurchaseOldBuildingDto dto = new PurchaseOldBuildingDto();
 
         boolean notEndOfPage = true;
         int page = 1;
@@ -45,7 +45,6 @@ public class JsoupPurchaseOldBuilding {
 
             } else {
 
-
                 Document document = Jsoup.connect("https://bina.az/alqi-satqi?page=" + i).get();
 
                 Elements div = document.getElementsByClass("items-i");
@@ -62,16 +61,28 @@ public class JsoupPurchaseOldBuilding {
                     Element categoryTest = document1.getElementsByTag("tr").first();
                     String categoryStringTest = categoryTest.text().substring(11);
 
-                    if (categoryStringTest.equalsIgnoreCase("Köhnə tikili")) {
+                    if (categoryStringTest.equalsIgnoreCase("Qaraj")) {
 
 
                         dto.setPrice(element1.getElementsByClass("price-val").text());
                         dto.setLocation(element1.getElementsByClass("location").text());
 
-                        try {
-                            dto.setRepair(element1.getElementsByClass("repair").tagName("span").text());
-                        }catch (Exception e){
-                            dto.setRepair("Təmirsiz");
+                        //Date
+                        Elements date = element1.getElementsByClass("city_when");
+
+                        Pattern patternDate = Pattern.compile("(?<=, )(.*\\n?)(?= )");
+                        Matcher matcherDate = patternDate.matcher(date.text());
+                        if (matcherDate.find()) {
+                            String group = matcherDate.group(1);
+                            if (group.equals("bugün")){
+                                LocalDate today = LocalDate.now();
+                                dto.setDate(String.valueOf(today));
+                            }else if (group.equals("dünən")){
+                                LocalDate today = LocalDate.now();
+                                dto.setDate(String.valueOf(today.minusDays(1)));
+                            }else {
+                                dto.setDate(group);
+                            }
                         }
 
                         try {
@@ -79,24 +90,6 @@ public class JsoupPurchaseOldBuilding {
                         } catch (Exception e) {
                             dto.setExtract("No Extract");
                         }
-                        try {
-                            dto.setRooms(element1.select("ul.name li").get(0).text());
-                        } catch (IndexOutOfBoundsException exception) {
-                            dto.setRooms("No Rooms");
-                        }
-
-                        try {
-                            dto.setArea(element1.select("ul.name li").get(1).text());
-                        } catch (IndexOutOfBoundsException exception) {
-                            dto.setArea("No Area");
-                        }
-
-                        try {
-                            dto.setCountOfFloor(element1.select("ul.name li").get(2).text());
-                        } catch (IndexOutOfBoundsException exception) {
-                            dto.setCountOfFloor("No Count Of Floor");
-                        }
-
 
                         try { //AnnouncementId
                             Elements announcementId = document1.select("div.item_info");
@@ -106,18 +99,23 @@ public class JsoupPurchaseOldBuilding {
                             dto.setAnnouncementId(Integer.parseInt("No AnnouncementID"));
                         }
 
-                        try {
+                        try { //Area
                             Elements elementsOfArea = document1.getElementsByTag("td"); //area
                             String area = elementsOfArea.text();
 
-                            Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
+                            Pattern pattern = Pattern.compile("(?<=Villa)(.*\\n?)(?=Otaq)");
                             Matcher matcher = pattern.matcher(area);
                             if (matcher.find()) {
-                                dto.setArea(matcher.group(1));
+                                String group = matcher.group(1);
+                                String[] sentence = group.split(" ");
+                                String landArea = sentence[6];
+                                dto.setArea(landArea);
                             }
+
                         } catch (Exception e) {
                             dto.setArea("No Area");
                         }
+
 
                         try { //Category
                             Element category = document1.getElementsByTag("tr").first();
@@ -149,30 +147,30 @@ public class JsoupPurchaseOldBuilding {
                         continue;
                     }
 
-                    PurchaseOldBuildingEntity oldBuildingEntity = PurchaseOldBuildingEntity.builder()
+                    PurchaseGarageEntity garageEntity = PurchaseGarageEntity.builder()
                             .id(dto.getId())
                             .announcementId(dto.getAnnouncementId())
                             .price(dto.getPrice())
                             .location(dto.getLocation())
                             .extract(dto.getExtract())
-                            .repair(dto.getRepair())
-                            .rooms(dto.getRooms())
-                            .countOfFloor(dto.getCountOfFloor())
                             .area(dto.getArea())
                             .category(dto.getCategory())
-                            .latitude(dto.getLatitude())
                             .longitude(dto.getLongitude())
+                            .latitude(dto.getLatitude())
+                            .date(dto.getDate())
                             .build();
 
-                    repository.save(oldBuildingEntity);
+                    repository.save(garageEntity);
+
                 }
+
+
 
                 i++;
-
-                if (i == 2) {
+                if (i==2){
                     break;
-
                 }
+
 
             }
 
@@ -180,3 +178,4 @@ public class JsoupPurchaseOldBuilding {
         return dto;
     }
 }
+

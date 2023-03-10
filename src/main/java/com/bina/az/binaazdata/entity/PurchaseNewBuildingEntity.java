@@ -53,6 +53,8 @@ public class PurchaseNewBuildingEntity {
 
     private String longitude; //+
 
+    private String date;
+
 
 
 }

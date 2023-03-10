@@ -1,12 +1,14 @@
-package com.bina.az.binaazdata.Jsoup.Test;
+package com.bina.az.binaazdata.JsoupService.Test;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.sound.midi.Soundbank;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +35,29 @@ public class JSoupPurchaseTest {
 
             for (Element element1 : div) {
 
+//                Elements date = element1.getElementsByClass("city_when");
+////                System.out.println(date.text());
+//
+//                Pattern pattern = Pattern.compile("(?<=, )(.*\\n?)(?= )");
+//                Matcher matcher = pattern.matcher(date.text());
+//                if (matcher.find()) {
+//                    String group = matcher.group(1);
+//                    if (group.equals("bugün")){
+//
+//                        LocalDate today = LocalDate.now();
+//                        System.out.println(today);
+//                    }else if (group.equals("dünən")){
+//                        LocalDate today = LocalDate.now();
+//                        System.out.println(today.minusDays(1));
+//                    }else {
+//                        System.out.println(group);
+//                    }
+//                }
+
+
+
+
+
 
                 Elements price = element1.getElementsByClass("price-val");
                 Elements location = element1.getElementsByClass("location");
@@ -54,7 +79,7 @@ public class JSoupPurchaseTest {
 
                 Elements elementofLandArea = document1.getElementsByTag("td"); //area
                 String area = elementofLandArea.text();
-                System.out.println(area);
+//                System.out.println(area);
 
 
 
@@ -81,6 +106,16 @@ public class JSoupPurchaseTest {
 //                }
 
 
+                Elements elementofHomeArea = document1.getElementsByTag("td"); //area
+                String area1 = elementofHomeArea.text();
+                System.out.println(area1);
+
+                Pattern pattern = Pattern.compile("(?<=sahəsi)(.*\\n?)(?=sot)");
+                Matcher matcher = pattern.matcher(area1);
+                if (matcher.find()) {
+                    String group = matcher.group(1);
+                    System.out.println(group);
+                }
 
 
 

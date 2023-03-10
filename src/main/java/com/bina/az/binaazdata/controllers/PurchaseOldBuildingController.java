@@ -1,7 +1,7 @@
 package com.bina.az.binaazdata.controllers;
 
 
-import com.bina.az.binaazdata.Jsoup.purchase.JsoupPurchaseOldBuilding;
+import com.bina.az.binaazdata.JsoupService.purchase.JsoupPurchaseOldBuilding;
 import com.bina.az.binaazdata.dto.purchase.PurchaseOldBuildingDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

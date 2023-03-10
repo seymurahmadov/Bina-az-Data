@@ -21,4 +21,6 @@ public class PurchaseLandDto {
     private String latitude; //+
 
     private String longitude; //+
+
+    private String date;
 }

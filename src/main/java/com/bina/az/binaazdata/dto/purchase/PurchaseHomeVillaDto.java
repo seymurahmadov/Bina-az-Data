@@ -9,7 +9,7 @@ public class PurchaseHomeVillaDto {
 
     private int announcementId; //+
 
-    private int price; //+
+    private String price; //+
 
     private String location; //+
 
@@ -17,16 +17,18 @@ public class PurchaseHomeVillaDto {
 
     private String repair; //+
 
-    private int rooms; //+
+    private String rooms; //+
 
-    private int homeArea; //+
+    private String homeArea; //+
 
-    private int landArea; //+
+    private String landArea; //+
 
     private String category; //+
 
     private String latitude; //+
 
     private String longitude; //+
+
+    private String date;
 
 }

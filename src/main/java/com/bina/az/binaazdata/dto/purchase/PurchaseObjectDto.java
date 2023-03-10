@@ -8,7 +8,7 @@ public class PurchaseObjectDto {
 
     private int announcementId; //+
 
-    private int price; //+
+    private String price; //+
 
     private String location; //+
 
@@ -16,11 +16,13 @@ public class PurchaseObjectDto {
 
     private String repair; //+
 
-    private int area;  //+
+    private String area;  //+
 
     private String category; //+
 
     private String latitude; //+
 
     private String longitude; //+
+
+    private String date;
 }
