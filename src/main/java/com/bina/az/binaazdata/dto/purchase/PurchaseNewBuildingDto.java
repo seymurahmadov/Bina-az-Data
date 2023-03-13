@@ -1,5 +1,7 @@
 package com.bina.az.binaazdata.dto.purchase;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 
@@ -17,6 +19,7 @@ public class PurchaseNewBuildingDto {
 
     private String repair; //+
 
+    @JsonProperty(required = false)
     private String rooms; //+
 
     private String countOfFloor;    //+

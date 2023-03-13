@@ -2,10 +2,10 @@ package com.bina.az.binaazdata.controllers;
 
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.service.PurchaseAveragePrice;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -15,11 +15,17 @@ import java.io.IOException;
 public class AveragePriceController {
 
    private final PurchaseAveragePrice  averagePrice;
-//
-//   @GetMapping()
-//    public Double setAveragePrice(String location) throws IOException {
-//        return averagePrice.setAveragePrice(location);
-//   }
+
+
+
+
+    @PostMapping ()
+    public Long setAveragePrice(@ApiParam(value = "location", required = true)  @RequestParam String location,
+                                @ApiParam(value = "optiona", required = false)  @RequestParam String rooms) throws IOException {
+
+
+        return averagePrice.setAveragePrice(location,rooms);
+   }
 
 
 }

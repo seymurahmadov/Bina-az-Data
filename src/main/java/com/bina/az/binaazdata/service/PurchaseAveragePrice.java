@@ -1,9 +1,9 @@
 package com.bina.az.binaazdata.service;
 
 import com.bina.az.binaazdata.JsoupService.purchase.JsoupPurchaseNewBuilding;
-import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,24 +13,30 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 @Service
 public class PurchaseAveragePrice {
-    private final JsoupPurchaseNewBuilding jsoupPurchaseNewBuilding;
+
     private final PurchaseNewBuildingRepository repository;
 
 
-//    Double averagePrice=0.0;
-//
-//
-//    public Double setAveragePrice(String location) throws IOException {
-//
-//        ArrayList<PurchaseNewBuildingEntity> byLocationanAndPrice = repository.findByLocationanAndPrice(location);
-//
-//
-//        for (PurchaseNewBuildingEntity e : byLocationanAndPrice){
-//            averagePrice+=averagePrice;
-//        }
-//        return averagePrice=averagePrice/byLocationanAndPrice.size();
-//
-//    }
+    Long averagePrice =0L;
+
+
+
+
+
+    public Long setAveragePrice(String location,String rooms) throws IOException {
+
+        ArrayList<PurchaseNewBuildingEntity> allByLocation = repository.findAllByLocationAndAndRooms(location,rooms);
+
+        for (PurchaseNewBuildingEntity e : allByLocation){
+            long l =Long.parseLong(e.getPrice().replaceAll(" ",""));
+            averagePrice+=l;
+
+        }
+        averagePrice = averagePrice/allByLocation.size();
+
+        return averagePrice;
+
+    }
 
 
 

@@ -81,7 +81,7 @@ public class JsoupPurchaseNewBuilding {
                                 LocalDate today = LocalDate.now();
                                 dto.setDate(String.valueOf(today));
                             }else if (group.equals("dünən")){
-                                LocalDate today = LocalDate.now();
+                                LocalDate  today = LocalDate.now();
                                 dto.setDate(String.valueOf(today.minusDays(1)));
                             }else {
                                dto.setDate(group);
@@ -97,6 +97,10 @@ public class JsoupPurchaseNewBuilding {
                             Matcher matcher = pattern.matcher(repairString);
                             if (matcher.find()) {
                                 dto.setRepair(matcher.group(1));
+                            }
+
+                            if (repairString.equals("") || repairString.equals(null)){
+                                dto.setRepair("Təmirsiz");
                             }
                         } catch (Exception e) {
                             dto.setRepair("No Repair");

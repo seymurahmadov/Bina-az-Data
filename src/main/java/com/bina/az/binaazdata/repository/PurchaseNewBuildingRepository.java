@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Repository
 public interface PurchaseNewBuildingRepository extends JpaRepository<PurchaseNewBuildingEntity,Integer> {
 
-//    ArrayList<PurchaseNewBuildingEntity> findByLocationanAndPrice(String location);
+    ArrayList<PurchaseNewBuildingEntity> findAllByLocationAndAndRooms(String location,String rooms);
 
 
 }
