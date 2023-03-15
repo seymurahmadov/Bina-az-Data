@@ -17,16 +17,15 @@ public class PurchaseNewBuildingController {
 
 
 
-    private final PurchaseNewBuildingService purchaseService;
-    private final JsoupPurchaseNewBuilding jsoupPurchaseNewBuilding;
+        private final JsoupPurchaseNewBuilding jsoupPurchaseNewBuilding;
 
 
 
 
-    @GetMapping("/add-purchase-new-building-data")
-    public PurchaseNewBuildingDto addNewBuildingData() throws IOException {
-       return jsoupPurchaseNewBuilding.purchaseJsoupNewBuildingData();
+        @GetMapping("/add-purchase-new-building-data")
+        public PurchaseNewBuildingDto addNewBuildingData() throws IOException {
+           return jsoupPurchaseNewBuilding.purchaseJsoupNewBuildingData();
 
 
-    }
+        }
 }
