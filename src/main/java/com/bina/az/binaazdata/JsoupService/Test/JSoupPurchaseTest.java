@@ -65,20 +65,26 @@ public class JSoupPurchaseTest {
 //                Elements repair = element1.getElementsByClass("repair");
 //                repair.tagName("span");
                 Element rooms = element1.select("ul.name li").get(0);
+                String roomsSubstring= rooms.text().substring(0,1);
+                System.out.println(roomsSubstring);
 
 
                 Elements href = element1.getElementsByAttribute("href");
                 String link = href.attr("abs:href");
                 Document document1 = Jsoup.connect(link).get();
 
+
+
+
+
 //
 //                Element category = document1.getElementsByTag("tr").first();
 //                String categoryString = category.text().substring(11);
 //                System.out.println(categoryString);
 
-
-                Elements elementofLandArea = document1.getElementsByTag("td"); //area
-                String area = elementofLandArea.text();
+//
+//                Elements elementofLandArea = document1.getElementsByTag("td"); //area
+//                String area = elementofLandArea.text();
 //                System.out.println(area);
 
 
@@ -105,17 +111,17 @@ public class JSoupPurchaseTest {
 //                    System.out.println(matcher.group(1));
 //                }
 
-
-                Elements elementofHomeArea = document1.getElementsByTag("td"); //area
-                String area1 = elementofHomeArea.text();
-                System.out.println(area1);
-
-                Pattern pattern = Pattern.compile("(?<=sahəsi)(.*\\n?)(?=sot)");
-                Matcher matcher = pattern.matcher(area1);
-                if (matcher.find()) {
-                    String group = matcher.group(1);
-                    System.out.println(group);
-                }
+//
+//                Elements elementofHomeArea = document1.getElementsByTag("td"); //area
+//                String area1 = elementofHomeArea.text();
+//                System.out.println(area1);
+//
+//                Pattern pattern = Pattern.compile("(?<=sahəsi)(.*\\n?)(?=sot)");
+//                Matcher matcher = pattern.matcher(area1);
+//                if (matcher.find()) {
+//                    String group = matcher.group(1);
+//                    System.out.println(group);
+//                }
 
 
 

@@ -72,7 +72,9 @@ public class JsoupPurchaseOffice {
                             dto.setExtract("No Extract");
                         }
                         try {
-                            dto.setRooms(element1.select("ul.name li").get(0).text());
+                            String rooms = element1.select("ul.name li").get(0).text();
+                            String roomsSubstring= rooms.substring(0,1);
+                            dto.setRooms(roomsSubstring);
                         } catch (IndexOutOfBoundsException exception) {
                             dto.setRooms("No Rooms");
                         }

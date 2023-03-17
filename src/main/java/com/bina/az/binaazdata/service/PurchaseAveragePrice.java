@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class PurchaseAveragePrice {
     private final PurchaseNewBuildingRepository repository;
 
 
-    Long averagePrice =0L;
+
 
 
 
@@ -27,15 +29,19 @@ public class PurchaseAveragePrice {
 
     public Long setAveragePrice(AveragePriceDto dto) throws IOException {
 
-        ArrayList<PurchaseNewBuildingEntity> allByLocation = repository.findAllByLocationAndAndRooms(dto);
+        List<PurchaseNewBuildingEntity> allByLocation = repository.findAllByLocationAndAndRooms(dto.getLocation(),dto.getRooms());
+
+
 
         for (PurchaseNewBuildingEntity e : allByLocation){
             if (!dto.getRooms().equals("")){
-                allByLocation.stream()
-                        .filter(allByLocation.stream().collect());
+          allByLocation= allByLocation.stream()
+                       .filter(str -> Objects.equals(str.getRooms(),dto.getRooms())).collect(Collectors.toList());
             }
         }
 
+
+        Long averagePrice =0L;
 
 
         for (PurchaseNewBuildingEntity e : allByLocation){
