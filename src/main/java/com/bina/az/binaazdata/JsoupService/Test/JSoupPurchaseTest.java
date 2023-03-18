@@ -29,8 +29,8 @@ public class JSoupPurchaseTest {
             Document document = Jsoup.connect(" https://bina.az/alqi-satqi?page=" + i).get();
 //            https://bina.az/alqi-satqi?page=
 
-            Elements div = document.select("div.items_list div.items-i").not(".vipped");
-//          Elements div = document.getElementsByClass("items-i");
+//            Elements div = document.select("div.items_list div.items-i").not(".vipped");
+          Elements div = document.getElementsByClass("items-i");
 
 
             for (Element element1 : div) {
@@ -55,23 +55,28 @@ public class JSoupPurchaseTest {
 //                }
 
 
+            String count = element1.select("ul.name li").get(2).text();
+
+                String[] s = count.split(" ");
+                String floor = s[0];
+                System.out.println(floor);
 
 
 
-
-                Elements price = element1.getElementsByClass("price-val");
-                Elements location = element1.getElementsByClass("location");
-//                Elements extract = element1.getElementsByClass("bill_of_sale");
-//                Elements repair = element1.getElementsByClass("repair");
-//                repair.tagName("span");
-                Element rooms = element1.select("ul.name li").get(0);
-                String roomsSubstring= rooms.text().substring(0,1);
-                System.out.println(roomsSubstring);
-
-
-                Elements href = element1.getElementsByAttribute("href");
-                String link = href.attr("abs:href");
-                Document document1 = Jsoup.connect(link).get();
+//
+//                Elements price = element1.getElementsByClass("price-val");
+//                Elements location = element1.getElementsByClass("location");
+////                Elements extract = element1.getElementsByClass("bill_of_sale");
+////                Elements repair = element1.getElementsByClass("repair");
+////                repair.tagName("span");
+//                Element rooms = element1.select("ul.name li").get(0);
+//                String roomsSubstring= rooms.text().substring(0,1);
+//                System.out.println(roomsSubstring);
+//
+//
+//                Elements href = element1.getElementsByAttribute("href");
+//                String link = href.attr("abs:href");
+//                Document document1 = Jsoup.connect(link).get();
 
 
 

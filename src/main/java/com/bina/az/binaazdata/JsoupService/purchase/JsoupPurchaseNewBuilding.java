@@ -129,7 +129,10 @@ public class JsoupPurchaseNewBuilding {
                         }
 
                         try {
-                            dto.setCountOfFloor(element1.select("ul.name li").get(2).text());
+                            String text = element1.select("ul.name li").get(2).text();
+                            String[] s = text.split(" ");
+                            String floor = s[0];
+                            dto.setCountOfFloor(floor);
                         } catch (IndexOutOfBoundsException exception) {
                             dto.setCountOfFloor(("No Count Of Floor"));
                         }
@@ -189,7 +192,15 @@ public class JsoupPurchaseNewBuilding {
                     PurchaseNewBulildingUtil util = new PurchaseNewBulildingUtil();
                     PurchaseNewBuildingEntity purchaseNewBuildingEntity = util.newBuilding(dto);
 
-                    newBuildingRepository.save(purchaseNewBuildingEntity);
+                    PurchaseNewBuildingEntity byAnnouncementId =
+                            newBuildingRepository.findByAnnouncementId(purchaseNewBuildingEntity.getAnnouncementId());
+
+                    if (byAnnouncementId==null){
+                        newBuildingRepository.save(purchaseNewBuildingEntity);
+
+                    }
+
+
                 }
                 i++;
 

@@ -2,7 +2,6 @@ package com.bina.az.binaazdata.controllers;
 
 import com.bina.az.binaazdata.dto.purchase.AveragePriceDto;
 import com.bina.az.binaazdata.service.PurchaseAveragePrice;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
