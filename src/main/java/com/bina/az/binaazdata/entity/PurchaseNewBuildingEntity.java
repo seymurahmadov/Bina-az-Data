@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -56,7 +57,7 @@ public class PurchaseNewBuildingEntity {
 
     private String longitude; //+
 
-    private String date;
+    private Date date;
 
 
 

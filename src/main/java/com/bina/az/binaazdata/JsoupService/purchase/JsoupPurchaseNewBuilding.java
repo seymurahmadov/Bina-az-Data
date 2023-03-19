@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,12 +80,15 @@ public class JsoupPurchaseNewBuilding {
                             String group = matcherDate.group(1);
                             if (group.equals("bugün")){
                                 LocalDate today = LocalDate.now();
-                                dto.setDate(String.valueOf(today));
+                                Date dateToday = java.sql.Date.valueOf(today);
+                                dto.setDate(dateToday);
                             }else if (group.equals("dünən")){
                                 LocalDate  today = LocalDate.now();
-                                dto.setDate(String.valueOf(today.minusDays(1)));
+                                Date dateYesterday = java.sql.Date.valueOf(today.minusDays(1));
+                                dto.setDate(dateYesterday);
                             }else {
-                               dto.setDate(group);
+                                Date dateAnother = java.sql.Date.valueOf(group);
+                                dto.setDate(dateAnother);
                             }
                         }
 
@@ -197,7 +201,6 @@ public class JsoupPurchaseNewBuilding {
 
                     if (byAnnouncementId==null){
                         newBuildingRepository.save(purchaseNewBuildingEntity);
-
                     }
 
 

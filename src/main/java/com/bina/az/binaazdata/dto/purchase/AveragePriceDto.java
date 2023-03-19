@@ -11,7 +11,7 @@ public class AveragePriceDto {
     String extract;
     String repair;
     String floor;
-    Long firstPrice;
-    Long lastPrice;
+//    Long firstPrice;
+//    Long lastPrice;
     private Date dateFrom;
 }

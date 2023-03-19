@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 
 @Data
 public class PurchaseNewBuildingDto {
@@ -19,7 +21,6 @@ public class PurchaseNewBuildingDto {
 
     private String repair; //+
 
-    @JsonProperty(required = false)
     private String rooms; //+
 
     private String countOfFloor;    //+
@@ -32,7 +33,7 @@ public class PurchaseNewBuildingDto {
 
     private String longitude; //+
 
-    private String date;
+    private Date date;
 
 
 
