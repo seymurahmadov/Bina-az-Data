@@ -28,12 +28,10 @@ public class AveragePriceController {
         return averagePrice.setAveragePrice(dto);
    }
 
-    @PostMapping ()
-    public void setBetweenPrice(@RequestBody AveragePriceDto2 dto2) throws IOException, ParseException {
-
-
-        averagePrice.findBetweenPrice(dto2);
-    }
-
+//    @PostMapping ()
+//    public PurchaseNewBuildingEntity setBetweenPrice(@RequestBody AveragePriceDto2 dto2) throws IOException, ParseException {
+//       return averagePrice.findBetweenPrice(dto2);
+//    }
+//
 
 }

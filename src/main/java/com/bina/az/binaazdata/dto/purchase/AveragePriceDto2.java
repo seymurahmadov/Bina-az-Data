@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AveragePriceDto2 {
-    String firstPrice;
-    String lastPrice;
+//    String firstPrice;
+//    String lastPrice;
 
 }

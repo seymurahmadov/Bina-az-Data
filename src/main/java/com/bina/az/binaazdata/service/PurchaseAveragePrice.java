@@ -27,9 +27,8 @@ public class PurchaseAveragePrice {
         //According to Location
         List<PurchaseNewBuildingEntity> allByLocation = repository.findAllByLocation(dto.getLocation());
 
-        for (PurchaseNewBuildingEntity e : allByLocation){
             if (!dto.getRooms().equals("") ){
-          allByLocation= allByLocation.stream()
+               allByLocation= allByLocation.stream()
                        .filter(str -> Objects.equals(str.getRooms(),dto.getRooms())).collect(Collectors.toList());
 
             }
@@ -48,8 +47,6 @@ public class PurchaseAveragePrice {
                 allByLocation = allByLocation.stream()
                         .filter(strFloor -> Objects.equals(strFloor.getCountOfFloor(),dto.getFloor())).collect(Collectors.toList());
             }
-     }
-
 
 
 
@@ -65,13 +62,13 @@ public class PurchaseAveragePrice {
                 .filter(strDateBefore-> date.before(strDateBefore.getDate())).collect(Collectors.toList());
 
         //AfterFromDate
-        allByLocation = allByLocation.stream()
-                .filter(strDateBefore -> date.after(strDateBefore.getDate())).collect(Collectors.toList());
+//        allByLocation = allByLocation.stream()
+//                .filter(strDateBefore -> date.after(strDateBefore.getDate())).collect(Collectors.toList());
 
 
-        //According to Price
 
 
+        //Average Price Logic
         Long averagePrice =0L;
 
 
@@ -92,24 +89,24 @@ public class PurchaseAveragePrice {
 
     }
 
-    public void findBetweenPrice(AveragePriceDto2 dto2){
-        List<PurchaseNewBuildingEntity> allByPrice = repository.findAllByPrice(dto2.getFirstPrice(), dto2.getLastPrice());
-
-        for (PurchaseNewBuildingEntity s : allByPrice){
-//            if (Long.parseLong(s.getPrice()) > Long.parseLong(dto2.getFirstPrice()) &&
-//                    Long.parseLong(s.getPrice()) <  Long.parseLong(dto2.getLastPrice())){
-            Long first =Long.parseLong(dto2.getFirstPrice());
-            Long second = Long.parseLong(dto2.getLastPrice());
-
-
-                allByPrice=allByPrice.stream()
-                        .filter(strPrice -> Long.parseLong(strPrice.getPrice())> first &&
-                                Long.parseLong(strPrice.getPrice()) < second).collect(Collectors.toList());
-//            }
-        }
-
-
-    }
+//    public PurchaseNewBuildingEntity findBetweenPrice(AveragePriceDto2 dto2){
+//
+//        List<PurchaseNewBuildingEntity> allByPrice = repository.findAllByPrice(dto2.getFirstPrice(), dto2.getLastPrice());
+//
+////            if (Long.parseLong(s.getPrice()) > Long.parseLong(dto2.getFirstPrice()) &&
+////                    Long.parseLong(s.getPrice()) <  Long.parseLong(dto2.getLastPrice())){
+//            Long first =Long.parseLong(dto2.getFirstPrice());
+//            Long second = Long.parseLong(dto2.getLastPrice());
+//
+//
+//                allByPrice=allByPrice.stream()
+//                        .filter(strPrice -> Long.parseLong(strPrice.getPrice())> first &&
+//                                Long.parseLong(strPrice.getPrice()) < second).collect(Collectors.toList());
+////            }
+//
+//        return (PurchaseNewBuildingEntity) allByPrice;
+//
+//    }
 }
 
 
