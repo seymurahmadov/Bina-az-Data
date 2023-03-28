@@ -10,11 +10,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,8 +26,8 @@ public class JsoupPurchaseNewBuilding {
 
     private final PurchaseNewBuildingRepository newBuildingRepository;
 
-         public PurchaseNewBuildingDto purchaseJsoupNewBuildingData() throws IOException {
-
+    @Scheduled(fixedRate = 60000)
+    public PurchaseNewBuildingDto purchaseJsoupNewBuildingData() throws IOException {
 
         PurchaseNewBuildingDto dto = new PurchaseNewBuildingDto();
 
@@ -68,7 +70,9 @@ public class JsoupPurchaseNewBuilding {
                     if (categoryStringTest.equalsIgnoreCase("Yeni tikili")) {
 
 
-                        dto.setPrice(element1.getElementsByClass("price-val").text());
+                        String priceString = element1.getElementsByClass("price-val").text();
+                        String s1 = priceString.replaceAll(" ", "");
+                        dto.setPrice(Long.valueOf(s1));
                         dto.setLocation(element1.getElementsByClass("location").text());
 
                         //Date

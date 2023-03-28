@@ -27,7 +27,7 @@ public class PurchaseNewBuildingEntity {
     private int announcementId;
 
     @Column(name = "price")
-    private String price;
+    private Long price;
 
     @Column(name = "location")
     private String location;

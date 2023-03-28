@@ -13,7 +13,7 @@ public interface PurchaseNewBuildingRepository extends JpaRepository<PurchaseNew
 
    PurchaseNewBuildingEntity findByAnnouncementId(int id);
 
-//   ArrayList<PurchaseNewBuildingEntity> findAllByPrice(String firstPrice, String lastPrice);
+   ArrayList<PurchaseNewBuildingEntity> findAllByPriceBetween(Long firstPrice, Long lastPrice);
 
 
 

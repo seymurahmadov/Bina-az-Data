@@ -13,7 +13,7 @@ public class PurchaseNewBuildingDto {
 
     private int announcementId; //+
 
-    private String price; //+
+    private Long price; //+
 
     private String location; //+
 

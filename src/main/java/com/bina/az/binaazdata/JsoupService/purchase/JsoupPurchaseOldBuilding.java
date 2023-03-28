@@ -181,7 +181,7 @@ public class JsoupPurchaseOldBuilding {
 
                 i++;
 
-                if (i == 2) {
+                if (i == 3) {
                     break;
 
                 }
