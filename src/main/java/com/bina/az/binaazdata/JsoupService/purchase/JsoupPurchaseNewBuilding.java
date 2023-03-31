@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +25,7 @@ public class JsoupPurchaseNewBuilding {
 
     private final PurchaseNewBuildingRepository newBuildingRepository;
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 30000)
     public PurchaseNewBuildingDto purchaseJsoupNewBuildingData() throws IOException {
 
         PurchaseNewBuildingDto dto = new PurchaseNewBuildingDto();
