@@ -63,10 +63,12 @@ public class JSoupPurchaseTest {
 
 
 
-//
-//                Elements price = element1.getElementsByClass("price-val");
-//                Elements location = element1.getElementsByClass("location");
-////                Elements extract = element1.getElementsByClass("bill_of_sale");
+
+                Elements price = element1.getElementsByClass("price-val");
+                Elements location = element1.getElementsByClass("location");
+                Elements extract = element1.getElementsByClass("bill_of_sale");
+
+                System.out.println(price.text() + " " + location.text() + " " + extract.text()) ;
 ////                Elements repair = element1.getElementsByClass("repair");
 ////                repair.tagName("span");
 //                Element rooms = element1.select("ul.name li").get(0);
