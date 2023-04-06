@@ -1,13 +1,14 @@
 package com.bina.az.binaazdata.controllers;
 
 import com.bina.az.binaazdata.JsoupService.purchase.JsoupPurchaseNewBuilding;
-import com.bina.az.binaazdata.dto.purchase.AveragePriceDto;
-import com.bina.az.binaazdata.dto.purchase.BetweenPricesDto;
+import com.bina.az.binaazdata.dto.purchase.serviceDto.AveragePriceDto;
+import com.bina.az.binaazdata.dto.purchase.serviceDto.BetweenAreaDto;
+import com.bina.az.binaazdata.dto.purchase.serviceDto.BetweenDateDto;
+import com.bina.az.binaazdata.dto.purchase.serviceDto.BetweenPricesDto;
 import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.service.PurchaseNewBuildingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -41,4 +42,18 @@ public class PurchaseNewBuildingController {
     public List<PurchaseNewBuildingEntity> setBetweenPrice(@RequestBody BetweenPricesDto dto2)  {
         return newBuildingService.findBetweenPrice(dto2);
     }
+
+    //BetweenDates
+    @PostMapping("/between-dates")
+    public List<PurchaseNewBuildingEntity> setBetweenDates(@RequestBody BetweenDateDto dto){
+        return newBuildingService.findBetweenDate(dto);
+
+    }
+
+    //BetweenArea
+    @PostMapping("/between-area")
+    public List<PurchaseNewBuildingEntity> setBetweenArea(@RequestBody BetweenAreaDto areaDto){
+        return newBuildingService.findBetweenArea(areaDto);
+    }
+
 }

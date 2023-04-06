@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Repository
 public interface PurchaseNewBuildingRepository extends JpaRepository<PurchaseNewBuildingEntity,Integer> {
@@ -14,6 +15,13 @@ public interface PurchaseNewBuildingRepository extends JpaRepository<PurchaseNew
    PurchaseNewBuildingEntity findByAnnouncementId(int id);
 
    ArrayList<PurchaseNewBuildingEntity> findAllByPriceBetween(Long firstPrice, Long lastPrice);
+
+   ArrayList<PurchaseNewBuildingEntity> findAllByDateBetween(Date firstDate, Date lastDate);
+
+   ArrayList<PurchaseNewBuildingEntity> findAllByAreaBetween(Integer minArea, Integer maxArea);
+
+   ArrayList<PurchaseNewBuildingEntity>
+   findAllByLocationAndRoomsAndExtractAndRepair(String location,String rooms,String extract,String repair);
 
 
 

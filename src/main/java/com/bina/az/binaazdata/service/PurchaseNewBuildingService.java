@@ -1,12 +1,9 @@
 package com.bina.az.binaazdata.service;
 
-import com.bina.az.binaazdata.dto.purchase.AveragePriceDto;
-import com.bina.az.binaazdata.dto.purchase.BetweenPricesDto;
+import com.bina.az.binaazdata.dto.purchase.serviceDto.*;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -100,11 +97,34 @@ public class PurchaseNewBuildingService {
 
     //BetweenPriceService
     public  List<PurchaseNewBuildingEntity> findBetweenPrice(BetweenPricesDto betweenPrices){
+        return repository.findAllByPriceBetween(betweenPrices.getMinPrice(), betweenPrices.getMaxPrice());
+    }
 
-     return repository.findAllByPriceBetween(betweenPrices.getMinPrice(), betweenPrices.getMaxPrice());
+
+    //Between Dates //!!!
+    public List<PurchaseNewBuildingEntity> findBetweenDate(BetweenDateDto betweenDate){
+       return repository.findAllByDateBetween(betweenDate.getFirstDate(),betweenDate.getLastDate());
+    }
+
+    //BetweenArea  // !!! cast ola biler nezerde saxla
+    public List<PurchaseNewBuildingEntity> findBetweenArea(BetweenAreaDto betweenArea){
+        return repository.findAllByAreaBetween(betweenArea.getMinArea(), betweenArea.getMaxArea());
+    }
+
+
+    public void findByLocAndRoomAndRepAndExt (GeneralServiceDto generalDto){
+
+        List<PurchaseNewBuildingEntity> allByGeneral =
+                repository.findAllByLocationAndRoomsAndExtractAndRepair(generalDto.getLocation(), generalDto.getRooms(),
+                                                                        generalDto.getRepair(), generalDto.getExtract());
+
 
 
     }
+
+
+
+
 }
 
 

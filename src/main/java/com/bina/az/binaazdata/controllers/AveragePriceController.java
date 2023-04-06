@@ -1,15 +1,7 @@
 package com.bina.az.binaazdata.controllers;
 
-import com.bina.az.binaazdata.dto.purchase.AveragePriceDto;
-import com.bina.az.binaazdata.dto.purchase.BetweenPricesDto;
-import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
-import com.bina.az.binaazdata.service.PurchaseNewBuildingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.List;
 
 @RestController
 @RequestMapping()

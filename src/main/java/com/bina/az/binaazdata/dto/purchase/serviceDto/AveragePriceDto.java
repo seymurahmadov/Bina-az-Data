@@ -1,4 +1,4 @@
-package com.bina.az.binaazdata.dto.purchase;
+package com.bina.az.binaazdata.dto.purchase.serviceDto;
 
 import lombok.Data;
 
