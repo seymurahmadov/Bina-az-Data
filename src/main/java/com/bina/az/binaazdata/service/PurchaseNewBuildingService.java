@@ -21,7 +21,6 @@ public class PurchaseNewBuildingService {
     private final PurchaseNewBuildingRepository repository;
 
     //AveragePriceService
-
     public Long setAveragePrice(AveragePriceDto dto) throws IOException, ParseException {
 
 
@@ -111,20 +110,14 @@ public class PurchaseNewBuildingService {
         return repository.findAllByAreaBetween(betweenArea.getMinArea(), betweenArea.getMaxArea());
     }
 
-
-    public void findByLocAndRoomAndRepAndExt (GeneralServiceDto generalDto){
+    //GeneralSortByLocByRoomByRepByExt
+    public List<PurchaseNewBuildingEntity> findByLocAndRoomAndRepAndExt (GeneralServiceDto generalDto){
 
         List<PurchaseNewBuildingEntity> allByGeneral =
                 repository.findAllByLocationAndRoomsAndExtractAndRepair(generalDto.getLocation(), generalDto.getRooms(),
                                                                         generalDto.getRepair(), generalDto.getExtract());
-
-
-
+        return allByGeneral;
     }
 
 
-
-
 }
-
-

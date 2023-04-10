@@ -1,10 +1,7 @@
 package com.bina.az.binaazdata.controllers;
 
 import com.bina.az.binaazdata.JsoupService.purchase.JsoupPurchaseNewBuilding;
-import com.bina.az.binaazdata.dto.purchase.serviceDto.AveragePriceDto;
-import com.bina.az.binaazdata.dto.purchase.serviceDto.BetweenAreaDto;
-import com.bina.az.binaazdata.dto.purchase.serviceDto.BetweenDateDto;
-import com.bina.az.binaazdata.dto.purchase.serviceDto.BetweenPricesDto;
+import com.bina.az.binaazdata.dto.purchase.serviceDto.*;
 import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.service.PurchaseNewBuildingService;
@@ -47,7 +44,6 @@ public class PurchaseNewBuildingController {
     @PostMapping("/between-dates")
     public List<PurchaseNewBuildingEntity> setBetweenDates(@RequestBody BetweenDateDto dto){
         return newBuildingService.findBetweenDate(dto);
-
     }
 
     //BetweenArea
@@ -56,4 +52,9 @@ public class PurchaseNewBuildingController {
         return newBuildingService.findBetweenArea(areaDto);
     }
 
+    //GeneralSortByLocByRoomByRepByExt
+    @PostMapping("general-sort")
+    public List<PurchaseNewBuildingEntity> generalSort(@RequestBody GeneralServiceDto dto){
+        return newBuildingService.findByLocAndRoomAndRepAndExt(dto);
+    }
 }
