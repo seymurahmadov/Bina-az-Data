@@ -8,6 +8,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +35,73 @@ public class JSoupPurchaseTest {
           Elements div = document.getElementsByClass("items-i");
 
 
+
+
             for (Element element1 : div) {
+
+
+                Elements date = element1.getElementsByClass("city_when");
+
+                Pattern patternDate = Pattern.compile("(?<=, )(.*\\n?)(?= )");
+                Matcher matcherDate = patternDate.matcher(date.text());
+                if (matcherDate.find()) {
+                    String group = matcherDate.group(1);
+                    if (group.equals("bugün")){
+                        LocalDate today = LocalDate.now();
+                        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+                        String format = today.format(myFormatObj);
+                        Date dateToday = java.sql.Date.valueOf(String.valueOf(today));
+                        System.out.println(dateToday);
+
+                    }else if (group.equals("dünən")){
+                        LocalDate  today = LocalDate.now();
+                        Date dateYesterday = java.sql.Date.valueOf(today.minusDays(1));
+                        System.out.println(dateYesterday);
+                    }else {
+                        Date dateAnother = java.sql.Date.valueOf(group);
+                        System.out.println(dateAnother);
+                    }
+                }
+
+
+
+
+//            for (Element element1 : div) {
+//
+//
+//                Elements date = element1.getElementsByClass("city_when");
+//
+//                Pattern patternDate = Pattern.compile("(?<=, )(.*\\n?)(?= )");
+//                Matcher matcherDate = patternDate.matcher(date.text());
+//                if (matcherDate.find()) {
+//                    String group = matcherDate.group(1);
+//                    if (group.equals("bugün")){
+//                        LocalDateTime today = LocalDateTime.now();
+//                        Date dateToday = java.sql.Date.valueOf(String.valueOf(today));
+//                        System.out.println(dateToday);
+//                    }else if (group.equals("dünən")){
+//                        LocalDate  today = LocalDate.now();
+//                        Date dateYesterday = java.sql.Date.valueOf(today.minusDays(1));
+//                        System.out.println(dateYesterday);
+//                    }else {
+//                        Date dateAnother = java.sql.Date.valueOf(group);
+//                        System.out.println(dateAnother);
+//                    }
+//                }
+
+
+//
+//                Elements areaElement = document1.getElementsByTag("td"); //area
+//                String area = areaElement.text();
+//
+//                Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
+//                Matcher matcher = pattern.matcher(area);
+//                String areaString=" ";
+//                if (matcher.find()) {
+//                    areaString =matcher.group(1);
+//                }
+
 
 //                Elements date = element1.getElementsByClass("city_when");
 ////                System.out.println(date.text());
@@ -54,21 +122,21 @@ public class JSoupPurchaseTest {
 //                    }
 //                }
 
-
-            String count = element1.select("ul.name li").get(2).text();
-
-                String[] s = count.split(" ");
-                String floor = s[0];
-                System.out.println(floor);
-
-
-
-
-                Elements price = element1.getElementsByClass("price-val");
-                Elements location = element1.getElementsByClass("location");
-                Elements extract = element1.getElementsByClass("bill_of_sale");
-
-                System.out.println(price.text() + " " + location.text() + " " + extract.text()) ;
+//
+//            String count = element1.select("ul.name li").get(2).text();
+//
+//                String[] s = count.split(" ");
+//                String floor = s[0];
+//                System.out.println(floor);
+//
+//
+//
+//
+//                Elements price = element1.getElementsByClass("price-val");
+//                Elements location = element1.getElementsByClass("location");
+//                Elements extract = element1.getElementsByClass("bill_of_sale");
+//
+//                System.out.println(price.text() + " " + location.text() + " " + extract.text()) ;
 ////                Elements repair = element1.getElementsByClass("repair");
 ////                repair.tagName("span");
 //                Element rooms = element1.select("ul.name li").get(0);

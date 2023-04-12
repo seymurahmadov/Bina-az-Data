@@ -8,4 +8,9 @@ public class GeneralServiceDto {
     String rooms;
     String repair;
     String extract;
+    Long minPrice;
+    Long maxPrice;
+    Integer minArea;
+    Integer maxArea;
+
 }

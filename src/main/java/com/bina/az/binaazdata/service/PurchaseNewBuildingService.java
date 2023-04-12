@@ -114,8 +114,9 @@ public class PurchaseNewBuildingService {
     public List<PurchaseNewBuildingEntity> findByLocAndRoomAndRepAndExt (GeneralServiceDto generalDto){
 
         List<PurchaseNewBuildingEntity> allByGeneral =
-                repository.findAllByLocationAndRoomsAndExtractAndRepair(generalDto.getLocation(), generalDto.getRooms(),
-                                                                        generalDto.getRepair(), generalDto.getExtract());
+          repository.findAllByLocationAndRoomsAndExtractAndRepairAndPriceBetweenAndAreaBetween(generalDto.getLocation(), generalDto.getRooms(),
+             generalDto.getExtract(),generalDto.getRepair(), generalDto.getMinPrice(), generalDto.getMaxPrice(), generalDto.getMinArea(),
+              generalDto.getMaxArea());
         return allByGeneral;
     }
 

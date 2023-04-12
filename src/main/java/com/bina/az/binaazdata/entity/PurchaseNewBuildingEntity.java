@@ -45,7 +45,7 @@ public class PurchaseNewBuildingEntity {
     private String countOfFloor;
 
     @Column(name = "area")
-    private String area;
+    private Integer area;
 
     @Column(name = "category")
     private String category;

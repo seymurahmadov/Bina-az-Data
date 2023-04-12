@@ -21,7 +21,8 @@ public interface PurchaseNewBuildingRepository extends JpaRepository<PurchaseNew
    ArrayList<PurchaseNewBuildingEntity> findAllByAreaBetween(Integer minArea, Integer maxArea);
 
    ArrayList<PurchaseNewBuildingEntity>
-   findAllByLocationAndRoomsAndExtractAndRepair(String location,String rooms,String extract,String repair);
+   findAllByLocationAndRoomsAndExtractAndRepairAndPriceBetweenAndAreaBetween(String location,String rooms,String extract,String repair,
+                                                                Long minPrice, Long maxPrice,Integer minArea, Integer maxArea);
 
 
 

@@ -25,7 +25,7 @@ public class PurchaseNewBuildingDto {
 
     private String countOfFloor;    //+
 
-    private String area;  //+
+    private Integer area;  //+
 
     private String category; //+
 

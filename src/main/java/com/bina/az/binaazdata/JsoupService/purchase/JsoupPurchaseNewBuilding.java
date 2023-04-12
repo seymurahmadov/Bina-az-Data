@@ -1,6 +1,5 @@
 package com.bina.az.binaazdata.JsoupService.purchase;
 
-
 import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
@@ -69,9 +68,12 @@ public class JsoupPurchaseNewBuilding {
                     if (categoryStringTest.equalsIgnoreCase("Yeni tikili")) {
 
 
+                        //Price
                         String priceString = element1.getElementsByClass("price-val").text();
                         String s1 = priceString.replaceAll(" ", "");
                         dto.setPrice(Long.valueOf(s1));
+
+                        //Location
                         dto.setLocation(element1.getElementsByClass("location").text());
 
                         //Date
@@ -96,6 +98,7 @@ public class JsoupPurchaseNewBuilding {
                         }
 
 
+                        //Repair
                         try {
                             Elements repair = document1.getElementsByTag("td");
                             String repairString = repair.text();
@@ -103,7 +106,8 @@ public class JsoupPurchaseNewBuilding {
                             Pattern pattern = Pattern.compile("(?<=Təmir\\s)(\\w+)");
                             Matcher matcher = pattern.matcher(repairString);
                             if (matcher.find()) {
-                                dto.setRepair(matcher.group(1));
+                                String group = matcher.group(1);
+                                dto.setRepair(group);
                             }
 
                             if (repairString.equals("") || repairString.equals(null)){
@@ -127,7 +131,9 @@ public class JsoupPurchaseNewBuilding {
                         } catch (Exception e) {
                             dto.setExtract("No Extract");
                         }
-                        try { //rooms
+
+                        //Rooms
+                        try {
                             String rooms = element1.select("ul.name li").get(0).text();
                             String roomsSubstring= rooms.substring(0,1);
                             dto.setRooms(roomsSubstring);
@@ -160,10 +166,13 @@ public class JsoupPurchaseNewBuilding {
                             Pattern pattern = Pattern.compile("(?<=Sahə)(.*\\n?)(?=m²)");
                             Matcher matcher = pattern.matcher(area);
                             if (matcher.find()) {
-                                dto.setArea((matcher.group(1)));
+                              String areaString =matcher.group(1).trim();
+                              Integer readyValue = Integer.valueOf(areaString);
+                              dto.setArea(readyValue);
                             }
+
                         } catch (Exception e) {
-                            dto.setArea(("No Area"));
+                            dto.setArea((0));
                         }
 
                         try { //Category
@@ -183,7 +192,7 @@ public class JsoupPurchaseNewBuilding {
                             dto.setLatitude("No Latitude");
                         }
 
-                        try { //Lonitude
+                        try { //Longtitude
                             Elements longitude = document1.select("#item_map");
                             String longitudeString = longitude.attr("data-lng");
                             dto.setLongitude(longitudeString);
