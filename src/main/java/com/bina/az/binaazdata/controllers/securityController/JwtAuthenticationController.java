@@ -50,7 +50,6 @@ public class JwtAuthenticationController {
 		AfterSignInResponseDto signInResponseDto = AfterSignInResponseDto.builder()
 				.token(token)
 				.email(request.getEmail())
-				.password(request.getPassword())
 				.role(request.getRole())
 				.build();
 

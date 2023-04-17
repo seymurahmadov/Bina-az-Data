@@ -14,7 +14,6 @@ public class AfterSignInResponseDto {
 
     private String email;
 
-    private String password;
 
     private String role;
 
@@ -25,7 +24,6 @@ public class AfterSignInResponseDto {
     public String toString() {
         return "token = " + token + '\n' +
                 "email = " + email + '\n' +
-                "password = " + password + '\n' +
                 "role = " + role;
 
     }

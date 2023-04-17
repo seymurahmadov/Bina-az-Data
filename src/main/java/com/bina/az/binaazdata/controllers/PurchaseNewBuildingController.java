@@ -5,7 +5,6 @@ import com.bina.az.binaazdata.dto.purchase.serviceDto.*;
 import com.bina.az.binaazdata.dto.purchase.PurchaseNewBuildingDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.service.PurchaseNewBuildingService;
-import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/binaazdata")
-@SecurityRequirement(name = "Bearer")
+@SecurityRequirement(name = "Bearer Authentication")
 @RequiredArgsConstructor
 public class PurchaseNewBuildingController {
 
