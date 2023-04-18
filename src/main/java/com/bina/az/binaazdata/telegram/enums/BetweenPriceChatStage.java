@@ -1,6 +1,6 @@
 package com.bina.az.binaazdata.telegram.enums;
 
-public enum BetweenPrice {
+public enum BetweenPriceChatStage {
     MIN_PRICE,
     MAX_PRICE
 }
