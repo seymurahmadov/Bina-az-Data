@@ -59,4 +59,10 @@ public class PurchaseNewBuildingController {
     public List<PurchaseNewBuildingEntity> generalSort(@RequestBody GeneralServiceDto dto){
         return newBuildingService.findByLocAndRoomAndRepAndExt(dto);
     }
+
+//    @PostMapping("/between-price-ann-id")
+//    public List<PurchaseNewBuildingEntity> byAnnId(@RequestBody BetweenPricesDto dto){
+//        return newBuildingService.findAnnId(dto);
+//    }
+
 }

@@ -40,7 +40,7 @@ public class JwtAuthenticationController {
 	private final UserRepo userRepo;
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public AfterSignInResponseDto  signIn(@Valid @RequestBody JwtRequest request)
+	public AfterSignInResponseDto  signIn( @RequestBody JwtRequest request)
 			throws Exception {
 
 		authenticate(request.getEmail(), request.getPassword());
@@ -58,7 +58,7 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/signup",method = RequestMethod.POST)
-	public ResponseEntity signUp (@Valid @RequestBody SignUpDto dto){
+	public ResponseEntity signUp ( @RequestBody SignUpDto dto){
 
 		UserEntity entity = userRepo.findUsersEntityByEmail(dto.getEmail());
 		if (entity == null) {

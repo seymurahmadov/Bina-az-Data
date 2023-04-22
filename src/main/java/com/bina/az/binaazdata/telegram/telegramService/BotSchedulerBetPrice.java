@@ -1,6 +1,5 @@
 package com.bina.az.binaazdata.telegram.telegramService;
 
-import com.bina.az.binaazdata.dto.purchase.serviceDto.BetweenPricesDto;
 import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
 import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
 import com.bina.az.binaazdata.telegram.dto.send.SendMessageResponseDTO;
@@ -9,7 +8,7 @@ import com.bina.az.binaazdata.telegram.dto.update.TelegramResponseDTO;
 import com.bina.az.binaazdata.telegram.dto.update.TelegramUpdateDTO;
 import com.bina.az.binaazdata.telegram.entity.BetweenPriceEntity;
 import com.bina.az.binaazdata.telegram.enums.BetweenPriceChatStage;
-import com.bina.az.binaazdata.telegram.repository.TelegramRepo;
+import com.bina.az.binaazdata.telegram.repository.BetweenPriceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,11 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
-public class BotScheduler {
+public class BotSchedulerBetPrice {
 
     @Value("${telegram.api.base-url}")
     String api;
@@ -31,7 +30,7 @@ public class BotScheduler {
 
     private Long offset = null;
 
-    private final TelegramRepo repository;
+    private final BetweenPriceRepository repository;
 
     private final PurchaseNewBuildingRepository newBuildingRepository;
 
@@ -58,7 +57,7 @@ public class BotScheduler {
 
                 //ChatStage Control
                 BetweenPriceEntity byChatId = repository.findByChatId(id);
-                repository.save(byChatId);
+//                repository.save(byChatId);
 
                 if (byChatId == null) {
                     BetweenPriceEntity entity = BetweenPriceEntity.builder()
@@ -73,7 +72,7 @@ public class BotScheduler {
                 }
 
                 if (text.equals("/betweenprices")) {
-                    sendMessage("Müəyyən aralıqda evlərin tapılması xidməti", id);
+                    sendMessage("Müəyyən qiymət aralıqda evlərin tapılması xidməti", id);
                     sendMessage("Zəhmət olmasa minimum qiyməti daxil edin:", id);
 
                     //ChatStageSave
@@ -97,13 +96,21 @@ public class BotScheduler {
 
                     byChatId.setMaxPrice(text);
                     repository.save(byChatId);
+
+                    Long minPriceLong = Long.parseLong(byChatId.getMinPrice());
+                    Long maxPriceLong = Long.parseLong(byChatId.getMaxPrice());
+                    ArrayList<PurchaseNewBuildingEntity> allByAnnouncementIdBetweenPrice =
+                            newBuildingRepository.findAllByPriceBetween(minPriceLong,maxPriceLong);
+
+                    if (allByAnnouncementIdBetweenPrice.size()>0) {
+                        for (PurchaseNewBuildingEntity a : allByAnnouncementIdBetweenPrice) {
+                            sendMessage("https://bina.az/items/" + a.getAnnouncementId(), id);
+                        }
+                    }
+                  else if (allByAnnouncementIdBetweenPrice.size()==0){
+                        sendMessage("O aralıqda evlər tapilmadı",id);
+                    }
                 }
-
-
-                public List<PurchaseNewBuildingEntity> findBetweenByAnId(BetweenPriceEntity betweenPrice){
-                  return newBuildingRepository.findAllByPriceBetween(byChatId.getMinPrice(),byChatId.getMaxPrice());
-                }
-
 
 
 
@@ -111,6 +118,8 @@ public class BotScheduler {
         }
 
         }
+
+
 
     public void sendMessage(String text, Long id) throws IOException {
         String url1 = api + "/bot" + token + "/sendMessage";
