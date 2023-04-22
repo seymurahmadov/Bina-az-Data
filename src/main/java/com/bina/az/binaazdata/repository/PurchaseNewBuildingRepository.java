@@ -26,4 +26,6 @@ public interface PurchaseNewBuildingRepository extends JpaRepository<PurchaseNew
 
 
 
+
+
 }

@@ -1,5 +1,8 @@
 package com.bina.az.binaazdata.telegram.telegramService;
 
+import com.bina.az.binaazdata.dto.purchase.serviceDto.BetweenPricesDto;
+import com.bina.az.binaazdata.entity.PurchaseNewBuildingEntity;
+import com.bina.az.binaazdata.repository.PurchaseNewBuildingRepository;
 import com.bina.az.binaazdata.telegram.dto.send.SendMessageResponseDTO;
 import com.bina.az.binaazdata.telegram.dto.send.text.SendMessageDTO;
 import com.bina.az.binaazdata.telegram.dto.update.TelegramResponseDTO;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +32,8 @@ public class BotScheduler {
     private Long offset = null;
 
     private final TelegramRepo repository;
+
+    private final PurchaseNewBuildingRepository newBuildingRepository;
 
 
     @Scheduled(fixedRate = 3000)
@@ -93,6 +99,10 @@ public class BotScheduler {
                     repository.save(byChatId);
                 }
 
+
+                public List<PurchaseNewBuildingEntity> findBetweenByAnId(BetweenPriceEntity betweenPrice){
+                  return newBuildingRepository.findAllByPriceBetween(byChatId.getMinPrice(),byChatId.getMaxPrice());
+                }
 
 
 
