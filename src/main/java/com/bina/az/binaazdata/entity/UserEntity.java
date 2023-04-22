@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -22,14 +24,16 @@ public class UserEntity {
     private Long id;
 
     @NotNull
-//    @Size(min = 3, max = 20)
+    @Email(message ="Email length can be minimum 8 and maximum 20" )
+    @Size(min = 8, max = 20 ,message = "Email length can be minimum 8 and maximum 20")
     private String email;
 
     @NotNull
-//    @Size(min = 3,max = 20)
+    @Size(min = 8,max = 20 ,message = "Password length can be minimum 8 and maximum 20")
     private String password;
 
     @NotNull
+    @Size(min = 8,max = 20 ,message = "Role length can be minimum 8 and maximum 20")
     private String role;
 
 }

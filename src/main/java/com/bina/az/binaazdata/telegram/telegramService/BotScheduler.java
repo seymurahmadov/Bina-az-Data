@@ -76,19 +76,26 @@ public class BotScheduler {
 
                 }
                 //ChatStageControl
-                if (byChatId.getChatStage().equals(BetweenPriceChatStage.MIN_PRICE.name())){
+                else if (byChatId.getChatStage().equals(BetweenPriceChatStage.MIN_PRICE.name())){
+
                     //SetPrice
                     byChatId.setMinPrice(text);
                     repository.save(byChatId);
-                }
-                byChatId.setChatStage(BetweenPriceChatStage.MAX_PRICE.name());
-                repository.save(byChatId);
-                sendMessage("Zəhmət olmasa maximum qiyməti daxil edin:",id);
 
-                if (byChatId.getChatStage().equals(BetweenPriceChatStage.MAX_PRICE.name())){
+                    byChatId.setChatStage(BetweenPriceChatStage.MAX_PRICE.name());
+                    repository.save(byChatId);
+
+                    sendMessage("Zəhmət olmasa maximum qiyməti daxil edin:",id);
+
+                }else if (byChatId.getChatStage().equals(BetweenPriceChatStage.MAX_PRICE.name())){
+
                     byChatId.setMaxPrice(text);
                     repository.save(byChatId);
                 }
+
+
+
+
 
             }
         }

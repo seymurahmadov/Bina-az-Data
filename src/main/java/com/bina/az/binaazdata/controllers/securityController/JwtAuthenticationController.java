@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Objects;
 
 @RestController
@@ -39,7 +40,7 @@ public class JwtAuthenticationController {
 	private final UserRepo userRepo;
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public AfterSignInResponseDto  signIn(@RequestBody JwtRequest request)
+	public AfterSignInResponseDto  signIn(@Valid @RequestBody JwtRequest request)
 			throws Exception {
 
 		authenticate(request.getEmail(), request.getPassword());
@@ -57,7 +58,7 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/signup",method = RequestMethod.POST)
-	public ResponseEntity signUp (@RequestBody SignUpDto dto){
+	public ResponseEntity signUp (@Valid @RequestBody SignUpDto dto){
 
 		UserEntity entity = userRepo.findUsersEntityByEmail(dto.getEmail());
 		if (entity == null) {
