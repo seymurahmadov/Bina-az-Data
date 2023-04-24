@@ -1,6 +1,5 @@
 package com.bina.az.binaazdata.telegram.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +15,7 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BetweenPriceEntity {
-
+public class TelegramEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,7 +24,17 @@ public class BetweenPriceEntity {
 
     private String chatStage;
 
+    private String minArea;
+
+    private String maxArea;
+
+    private String minDate;
+
+    private String maxDate;
+
     private String minPrice;
 
     private String maxPrice;
+
+
 }
