@@ -3,7 +3,7 @@ package com.bina.az.binaazdata.controllers.securityController;
 import com.bina.az.binaazdata.config.security.JwtTokenUtil;
 import com.bina.az.binaazdata.dto.security.AfterSignInResponseDto;
 import com.bina.az.binaazdata.dto.security.SignUpDto;
-import com.bina.az.binaazdata.entity.UserEntity;
+import com.bina.az.binaazdata.entity.securityEntity.UserEntity;
 import com.bina.az.binaazdata.model.JwtRequest;
 import com.bina.az.binaazdata.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class JwtAuthenticationController {
 	private final UserRepo userRepo;
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public AfterSignInResponseDto  signIn( @RequestBody JwtRequest request)
+	public AfterSignInResponseDto  signIn(@Valid @RequestBody JwtRequest request)
 			throws Exception {
 
 		authenticate(request.getEmail(), request.getPassword());
@@ -58,7 +58,7 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/signup",method = RequestMethod.POST)
-	public ResponseEntity signUp ( @RequestBody SignUpDto dto){
+	public ResponseEntity signUp (@Valid @RequestBody SignUpDto dto){
 
 		UserEntity entity = userRepo.findUsersEntityByEmail(dto.getEmail());
 		if (entity == null) {

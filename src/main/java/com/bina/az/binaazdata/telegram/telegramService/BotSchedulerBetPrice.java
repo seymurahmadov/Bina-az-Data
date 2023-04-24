@@ -69,6 +69,11 @@ public class BotSchedulerBetPrice {
 
                 if (text.equals("/start")) {
                     sendMessage("Bina.az botuna xoş gəlmisiniz. Zəhmət olmasa xidməti seçin", id);
+                    sendMessage("/betweenprices",id);
+                    sendMessage("/betweenarea",id);
+                    sendMessage("/betweendates",id);
+                    sendMessage("/averageprice",id);
+                    sendMessage("/generalsort",id);
                 }
 
                 if (text.equals("/betweenprices")) {

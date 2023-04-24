@@ -93,13 +93,13 @@ public class BotSchedulerBetArea {
                            newBuildingRepository.findAllByAreaBetween(minArea, maxArea);
 
 
-                   if (allByAreaBetween.size()>=0) {
+                   if (allByAreaBetween.size()>0) {
                        for (PurchaseNewBuildingEntity item : allByAreaBetween) {
                            sendMessage("https://bina.az/items/" + item.getAnnouncementId(), id);
                        }
                    }
 
-                  else if (allByAreaBetween.size()<=0 || allByAreaBetween==null){
+                 else if (allByAreaBetween.size()==0 || allByAreaBetween==null){
                        sendMessage("O aralıqda evlər tapilmadı",id);
                    }
 

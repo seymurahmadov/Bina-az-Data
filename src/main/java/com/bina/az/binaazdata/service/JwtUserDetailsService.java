@@ -1,7 +1,7 @@
 package com.bina.az.binaazdata.service;
 
 
-import com.bina.az.binaazdata.entity.UserEntity;
+import com.bina.az.binaazdata.entity.securityEntity.UserEntity;
 import com.bina.az.binaazdata.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;

@@ -1,6 +1,6 @@
 package com.bina.az.binaazdata.repository;
 
-import com.bina.az.binaazdata.entity.UserEntity;
+import com.bina.az.binaazdata.entity.securityEntity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
