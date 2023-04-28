@@ -59,8 +59,17 @@ public class BotSchedulerBetPrice {
             byChatId.setMaxPrice(text);
             telegramRepository.save(byChatId);
 
-            Long minPriceLong = Long.parseLong(byChatId.getMinPrice());
-            Long maxPriceLong = Long.parseLong(byChatId.getMaxPrice());
+            Long minPriceLong= Long.valueOf(0);
+            Long maxPriceLong= Long.valueOf(0);
+
+            try {
+                minPriceLong = Long.parseLong(byChatId.getMinPrice());
+                maxPriceLong = Long.parseLong(byChatId.getMaxPrice());
+            }catch (Exception e){
+                e.getMessage();
+            }
+
+
             ArrayList<PurchaseNewBuildingEntity> allByAnnouncementIdBetweenPrice =
                     newBuildingRepository.findAllByPriceBetween(minPriceLong, maxPriceLong);
 

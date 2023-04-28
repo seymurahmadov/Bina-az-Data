@@ -49,9 +49,18 @@ public class BotSchedulerBetArea {
                } else if (byChatId.getChatStage().equals(TelegramEnum.MAX_AREA.name())) {
                    byChatId.setMaxArea(text);
                    telegramRepository.save(byChatId);
+                    Integer minArea=0;
+                    Integer maxArea=0;
+                   try {
 
-                   Integer minArea = Integer.valueOf(byChatId.getMinArea());
-                   Integer maxArea = Integer.valueOf(byChatId.getMaxArea());
+
+                        minArea = Integer.valueOf(byChatId.getMinArea());
+
+                        maxArea = Integer.valueOf(byChatId.getMaxArea());
+                   }catch (Exception e){
+                       e.getMessage();
+                   }
+
 
                    ArrayList<PurchaseNewBuildingEntity> allByAreaBetween =
                            newBuildingRepository.findAllByAreaBetween(minArea, maxArea);

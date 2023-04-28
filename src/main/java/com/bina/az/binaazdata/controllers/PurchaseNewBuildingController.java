@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
@@ -50,7 +51,7 @@ public class PurchaseNewBuildingController {
 
     //BetweenArea
     @PostMapping("/between-area")
-    public List<PurchaseNewBuildingEntity> setBetweenArea(@RequestBody BetweenAreaDto areaDto){
+    public List<PurchaseNewBuildingEntity> setBetweenArea(@Valid @RequestBody BetweenAreaDto areaDto){
         return newBuildingService.findBetweenArea(areaDto);
     }
 

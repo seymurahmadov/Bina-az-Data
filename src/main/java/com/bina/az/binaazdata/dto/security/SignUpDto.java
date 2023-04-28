@@ -20,7 +20,7 @@ public class SignUpDto {
     private String password;
 
     @NotEmpty(message ="Rol boş qoyula bilməz" )
-    @Size(min = 8,max = 20 ,message = "Role uzunluğu minimum 8, maximum 20 olamlıdır")
+    @Size(min = 2,max = 20 ,message = "Role uzunluğu minimum 2, maximum 20 olamlıdır")
     private String role;
 
 
