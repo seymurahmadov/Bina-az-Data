@@ -77,6 +77,8 @@ public class BotSchedulerBetPrice {
                 for (PurchaseNewBuildingEntity a : allByAnnouncementIdBetweenPrice) {
                     sendMessage("https://bina.az/items/" + a.getAnnouncementId(), id);
                 }
+                byChatId.setChatStage(TelegramEnum.COMPLETED.name());
+                telegramRepository.save(byChatId);
             } else if (allByAnnouncementIdBetweenPrice.size() == 0) {
                 sendMessage("O aralıqda evlər tapilmadı", id);
             }

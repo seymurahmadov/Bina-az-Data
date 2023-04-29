@@ -39,13 +39,13 @@ public class PurchaseNewBuildingController {
 
     //BetweenPrices
     @PostMapping ("/between-prices")
-    public List<PurchaseNewBuildingEntity> setBetweenPrice(@RequestBody BetweenPricesDto dto2)  {
+    public List<PurchaseNewBuildingEntity> setBetweenPrice(@Valid @RequestBody BetweenPricesDto dto2)  {
         return newBuildingService.findBetweenPrice(dto2);
     }
 
     //BetweenDates
     @PostMapping("/between-dates")
-    public List<PurchaseNewBuildingEntity> setBetweenDates(@RequestBody BetweenDateDto dto){
+    public List<PurchaseNewBuildingEntity> setBetweenDates(@Valid @RequestBody BetweenDateDto dto){
         return newBuildingService.findBetweenDate(dto);
     }
 
@@ -57,13 +57,9 @@ public class PurchaseNewBuildingController {
 
     //GeneralSortByLocByRoomByRepByExt
     @PostMapping("/general-sort")
-    public List<PurchaseNewBuildingEntity> generalSort(@RequestBody GeneralServiceDto dto){
+    public List<PurchaseNewBuildingEntity> generalSort(@Valid @RequestBody GeneralServiceDto dto){
         return newBuildingService.findByLocAndRoomAndRepAndExt(dto);
     }
 
-//    @PostMapping("/between-price-ann-id")
-//    public List<PurchaseNewBuildingEntity> byAnnId(@RequestBody BetweenPricesDto dto){
-//        return newBuildingService.findAnnId(dto);
-//    }
 
 }

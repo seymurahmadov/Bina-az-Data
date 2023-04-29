@@ -1,6 +1,7 @@
 package com.bina.az.binaazdata.dto.security;
 
 public class User {
+
     public String username;
 
     public String getUsername() {

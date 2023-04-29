@@ -100,12 +100,12 @@ public class PurchaseNewBuildingService {
     }
 
 
-    //Between Dates //!!!
+    //Between Dates
     public List<PurchaseNewBuildingEntity> findBetweenDate(BetweenDateDto betweenDate){
        return repository.findAllByDateBetween(betweenDate.getFirstDate(),betweenDate.getLastDate());
     }
 
-    //BetweenArea  // !!! cast ola biler nezerde saxla
+    //BetweenArea
     public List<PurchaseNewBuildingEntity> findBetweenArea(BetweenAreaDto betweenArea){
         return repository.findAllByAreaBetween(betweenArea.getMinArea(), betweenArea.getMaxArea());
     }

@@ -70,9 +70,10 @@ public class BotSchedulerBetArea {
                        for (PurchaseNewBuildingEntity item : allByAreaBetween) {
                            sendMessage("https://bina.az/items/" + item.getAnnouncementId(), id);
                        }
+                       byChatId.setChatStage(TelegramEnum.COMPLETED.name());
+                       telegramRepository.save(byChatId);
                    }
-
-                 else if (allByAreaBetween.size()==0 || allByAreaBetween==null){
+                   else if (allByAreaBetween.size()==0 || allByAreaBetween==null){
                        sendMessage("O aralıqda evlər tapilmadı",id);
                    }
 

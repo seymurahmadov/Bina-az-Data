@@ -7,5 +7,6 @@ public enum TelegramEnum {
     MIN_DATE,
     MAX_DATE,
     MIN_AREA,
-    MAX_AREA
+    MAX_AREA,
+    COMPLETED
 }

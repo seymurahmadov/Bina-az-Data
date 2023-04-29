@@ -1,19 +1,21 @@
 package com.bina.az.binaazdata.dto.purchase.serviceDto;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class BetweenPricesDto {
 
-//    @NotEmpty(message = "Minimum qiymət boş qoyula bilməz")
-    @Size(min = 0 ,message = "Zəhmət olmasa keçərli qiymət daxil edin")
+    @NotNull(message = "Minimum qiymət boş qoyula bilməz")
+    @Min(value = 0, message = "Zəhmət olmasa keçərli qiymət daxil edin")
     Long minPrice;
 
-//    @NotEmpty(message = "Maximum qiymət boş qoyula bilməz")
-    @Size(min = 0 ,message = "Zəhmət olmasa keçərli qiymət daxil edin")
+    @NotNull(message = "Maximum qiymət boş qoyula bilməz")
+    @Min(value = 0, message = "Zəhmət olmasa keçərli qiymət daxil edin")
     Long maxPrice;
 
 }

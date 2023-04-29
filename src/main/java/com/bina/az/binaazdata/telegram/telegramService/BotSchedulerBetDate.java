@@ -67,6 +67,9 @@ public class BotSchedulerBetDate {
                 for (PurchaseNewBuildingEntity item : allByDateBetween) {
                     sendMessage("https://bina.az/items/" + item.getAnnouncementId(), id);
                 }
+                byChatId.setChatStage(TelegramEnum.COMPLETED.name());
+                telegramRepository.save(byChatId);
+
             } else if (allByDateBetween.size()==0) {
                 sendMessage("O aralıqda evlər tapilmadı", id);
 
