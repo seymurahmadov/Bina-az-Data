@@ -27,27 +27,26 @@ public class PurchaseNewBuildingService {
         //According to Location
         List<PurchaseNewBuildingEntity> allByLocation = repository.findAllByLocation(dto.getLocation());
 
-            if (!dto.getRooms().equals("") ){
-               allByLocation= allByLocation.stream()
-                       .filter(str -> Objects.equals(str.getRooms(),dto.getRooms())).collect(Collectors.toList());
+        if (!dto.getRooms().equals("")) {
+            allByLocation = allByLocation.stream()
+                    .filter(str -> Objects.equals(str.getRooms(), dto.getRooms())).collect(Collectors.toList());
 
-            }
+        }
 
-            if (!dto.getExtract().equals("")){
-                allByLocation=allByLocation.stream()
-                        .filter(strExt -> Objects.equals(strExt.getExtract(),dto.getExtract())).collect(Collectors.toList());
-            }
+        if (!dto.getExtract().equals("")) {
+            allByLocation = allByLocation.stream()
+                    .filter(strExt -> Objects.equals(strExt.getExtract(), dto.getExtract())).collect(Collectors.toList());
+        }
 
-            if (!dto.getRepair().equals("")){
-                allByLocation = allByLocation.stream()
-                        .filter(strRepair -> Objects.equals(strRepair.getRepair(),dto.getRepair())).collect(Collectors.toList());
-            }
+        if (!dto.getRepair().equals("")) {
+            allByLocation = allByLocation.stream()
+                    .filter(strRepair -> Objects.equals(strRepair.getRepair(), dto.getRepair())).collect(Collectors.toList());
+        }
 
-            if (!dto.getFloor().equals("")){
-                allByLocation = allByLocation.stream()
-                        .filter(strFloor -> Objects.equals(strFloor.getCountOfFloor(),dto.getFloor())).collect(Collectors.toList());
-            }
-
+        if (!dto.getFloor().equals("")) {
+            allByLocation = allByLocation.stream()
+                    .filter(strFloor -> Objects.equals(strFloor.getCountOfFloor(), dto.getFloor())).collect(Collectors.toList());
+        }
 
 
         Date dateFrom = dto.getDateFrom();
@@ -61,32 +60,29 @@ public class PurchaseNewBuildingService {
         Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(before);
 
 
-
         //BeforeFromDate
         allByLocation = allByLocation.stream()
-                .filter(strDateBefore-> date1.before(strDateBefore.getDate())).collect(Collectors.toList());
+                .filter(strDateBefore -> date1.before(strDateBefore.getDate())).collect(Collectors.toList());
 
         //AfterFromDate
         allByLocation = allByLocation.stream()
                 .filter(strDateBefore -> date2.after(strDateBefore.getDate())).collect(Collectors.toList());
 
 
-
-
         //Average Price Logic
-        Long averagePrice =0L;
+        Long averagePrice = 0L;
 
 
-        for (PurchaseNewBuildingEntity e : allByLocation){
-            long l =e.getPrice();
-            averagePrice+=l;
+        for (PurchaseNewBuildingEntity e : allByLocation) {
+            long l = e.getPrice();
+            averagePrice += l;
 
         }
 
         try {
-            averagePrice = averagePrice/allByLocation.size();
+            averagePrice = averagePrice / allByLocation.size();
 
-        }catch (ArithmeticException e){
+        } catch (ArithmeticException e) {
             return 0L;
         }
 
@@ -95,34 +91,30 @@ public class PurchaseNewBuildingService {
     }
 
     //BetweenPriceService
-    public  List<PurchaseNewBuildingEntity> findBetweenPrice(BetweenPricesDto betweenPrices){
+    public List<PurchaseNewBuildingEntity> findBetweenPrice(BetweenPricesDto betweenPrices) {
         return repository.findAllByPriceBetween(betweenPrices.getMinPrice(), betweenPrices.getMaxPrice());
     }
 
 
     //Between Dates
-    public List<PurchaseNewBuildingEntity> findBetweenDate(BetweenDateDto betweenDate){
-       return repository.findAllByDateBetween(betweenDate.getFirstDate(),betweenDate.getLastDate());
+    public List<PurchaseNewBuildingEntity> findBetweenDate(BetweenDateDto betweenDate) {
+        return repository.findAllByDateBetween(betweenDate.getFirstDate(), betweenDate.getLastDate());
     }
 
     //BetweenArea
-    public List<PurchaseNewBuildingEntity> findBetweenArea(BetweenAreaDto betweenArea){
+    public List<PurchaseNewBuildingEntity> findBetweenArea(BetweenAreaDto betweenArea) {
         return repository.findAllByAreaBetween(betweenArea.getMinArea(), betweenArea.getMaxArea());
     }
 
     //GeneralSortByLocByRoomByRepByExt
-    public List<PurchaseNewBuildingEntity> findByLocAndRoomAndRepAndExt (GeneralServiceDto generalDto){
+    public List<PurchaseNewBuildingEntity> findByLocAndRoomAndRepAndExt(GeneralServiceDto generalDto) {
 
         List<PurchaseNewBuildingEntity> allByGeneral =
-          repository.findAllByLocationAndRoomsAndExtractAndRepairAndPriceBetweenAndAreaBetween(generalDto.getLocation(), generalDto.getRooms(),
-             generalDto.getExtract(),generalDto.getRepair(), generalDto.getMinPrice(), generalDto.getMaxPrice(), generalDto.getMinArea(),
-              generalDto.getMaxArea());
+                repository.findAllByLocationAndRoomsAndExtractAndRepairAndPriceBetweenAndAreaBetween(generalDto.getLocation(), generalDto.getRooms(),
+                        generalDto.getExtract(), generalDto.getRepair(), generalDto.getMinPrice(), generalDto.getMaxPrice(), generalDto.getMinArea(),
+                        generalDto.getMaxArea());
         return allByGeneral;
     }
-
-
-
-
 
 
 }
